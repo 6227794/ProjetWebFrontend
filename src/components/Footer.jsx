@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 function Footer() {
     return (
-        <footer className='fixed-bottom'>
+        <footer>
             <div className="">
                 <Link className="appnameft" to={`/`}>Flexi<br/>Food</Link>
             </div>
 
             <div className="">
-
+                <div className='beigeline'></div>
             </div>
 
             <div className="">

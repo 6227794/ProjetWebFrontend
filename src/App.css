@@ -1,48 +1,82 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-:root{
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
   --mainborder: 15px;
   --innerborder: 8px;
-  --dark_green:#121D14;
-  --forest_green:#183B25;
-  --moss_green:#344E41;
-  --green:#3A5B40;
-  --light_green:#588057;
-  --lighter_green:#6F9675;
-  --lime_green:#B6CF62;
-  --greige:#DAD7CD;
-  --beige:#F4F0E5;
-  --warning:#890303;
-  --white:white;
+  --dark_green: #121D14;
+  --forest_green: #183B25;
+  --moss_green: #344E41;
+  --green: #3A5B40;
+  --light_green: #588057;
+  --lighter_green: #6F9675;
+  --lime_green: #B6CF62;
+  --greige: #DAD7CD;
+  --beige: #F4F0E5;
+  --warning: #890303;
+  --white: white;
 }
 
-body{
+body {
   background-color: var(--beige);
   font-family: "Montserrat", serif;
 }
 
-h1, h2, h3, h4, h5, h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Bebas Neue", serif;
+  margin-bottom: 0;
+  color: var(--dark_green);
 }
 
-p{
-  color: var(--dark_green);
+h1 {
   font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.75rem;
+}
+
+h5 {
+  font-size: 1.5rem;
+}
+
+h6 {
+  font-size: 1.25rem;
+}
+
+p {
+  color: var(--dark_green);
+  font-size: 1rem;
   margin-bottom: 0;
 }
 
-nav{
+/* - - - - - - H E A D E R - - - - - - */
+
+nav {
   background-color: var(--lime_green);
   padding: 0.5rem 5rem;
   display: flex;
   justify-content: space-between;
 }
 
-.appname{
+.appname {
   font-family: "Bebas Neue", serif;
-  font-size: 2rem;
+  font-size: 3rem;
 }
 
-.mainnav{
+.mainnav {
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -50,19 +84,23 @@ nav{
   padding-left: 0;
 }
 
-.mainnav li{
+.mainnav li {
   list-style: none;
 }
 
-.mainnav a{
+.mainnav a {
   font-family: "Bebas Neue", serif;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--dark_green);
   text-decoration: none;
+  transition-timing-function: ease-in-out;
+  transition: 0.5s;
 }
 
-.mainnav a:hover{
-  text-decoration: underline;
+.mainnav a:hover {
+  /* text-decoration: underline; */
+  position: relative;
+  top: -0.2rem;
 }
 
 /* Dropdown Button */
@@ -81,7 +119,7 @@ nav{
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -92,37 +130,175 @@ nav{
   display: block;
 }
 
-.dropdown-content a:hover {background-color: #ddd;}
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
 
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 
 /* .dropdown:hover {background-color: #3e8e41;} */
+
+
+/* - - - - - - H O M E  P A G E  :  S E C T I O N - - - - - - */
+
+.homepagesection {
+  height: 560px;
+  position: relative;
+}
+
+.homebg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 0 65%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.homebgeffect {
+  background-image: linear-gradient(to right, var(--white), transparent, transparent);
+  opacity: 0.8;
+  float: left;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.homeintro {
+  float: left;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  padding: 8rem 50% 0 5rem;
+  z-index: 3;
+}
+
+.comicallylargetitle {
+  font-family: "Bebas Neue", serif;
+  font-size: 6rem;
+  line-height: 6rem;
+}
+
+.homeintro h1 {
+  margin-top: -0.8rem;
+}
+
+.homeintro p {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  line-height: 1.7rem;
+  font-weight: 400;
+}
+
+.homebutton {
+  background-color: var(--lime_green);
+  color: var(--dark_green);
+  border: none;
+  border-radius: var(--innerborder);
+  padding: 0.4rem 3rem;
+  font-family: "Lobster", sans-serif;
+  font-size: 1.4rem;
+  transition-timing-function: ease-in-out;
+  transition: 0.5s;
+}
+
+.homebutton:hover {
+  background-color: var(--forest_green);
+  color: var(--lime_green);
+  box-shadow: 0.2rem 0.2rem var(--lime_green);
+}
+
+
+/* - - - - - - H O M E  P A G E  :  A R T I C L E - - - - - - */
+
+.homepagearticle {
+  padding: 2.8rem 5rem 4rem;
+}
+
+.homepagearticle h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.homepagerecipes {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+
+/* - - - - - - M A I N  R E C I P E  C A R D - - - - - - */
+
+.recipecard {
+  background-color: var(--greige);
+  padding: 1rem;
+  border-radius: var(--mainborder);
+}
+
+.recipecard h2 {
+  margin-bottom: 0.4rem;
+}
+
+.recipecard img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.tagsdisplay {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.recipetag {
+  display: inline;
+  background-color: var(--lime_green);
+  border-radius: var(--innerborder);
+  padding: 0.3rem;
+  font-size: 0.75rem;
+}
+
+
+/* - - - - - - F O O T E R - - - - - - */
 
 footer {
   background-color: var(--forest_green);
   color: var(--beige);
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding: 2rem 20% 1rem;
+  grid-template-columns: auto auto auto auto auto;
+  padding: 3rem 20% 3rem;
 }
 
-footer a{
+.appnameft {
+  color: var(--greige);
+  font-family: "Bebas Neue", serif;
+  font-size: 2.8rem;
+  line-height: 2.4rem;
+}
+
+footer a {
   text-decoration: none;
 }
 
-.nav-footer{
+.nav-footer {
   font-family: "Bebas Neue", serif;
   font-size: 1.2rem;
+  letter-spacing: 0.02rem;
   list-style: none;
+  margin-bottom: 0;
+  padding-right: 1rem;
 }
 
-.appnameft{
-  color: var(--greige);
-  font-family: "Bebas Neue", serif;
-  font-size: 2rem;
-  line-height: 2rem;
-}
-
-.homebg{
-  width: 100%;
+.beigeline {
+  background-color: var(--beige);
+  width: 2px;
+  height: 5rem;
 }
