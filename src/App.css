@@ -97,7 +97,7 @@ nav {
   transition: 0.5s;
 }
 
-.mainnav a:hover {
+.mainlinknav:hover {
   /* text-decoration: underline; */
   position: relative;
   top: -0.2rem;
@@ -120,7 +120,7 @@ nav {
   position: absolute;
   background-color: #f1f1f1;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  z-index: 5;
 }
 
 .dropdown-content a {
@@ -140,6 +140,33 @@ nav {
 
 /* .dropdown:hover {background-color: #3e8e41;} */
 
+/* - - - - - - M A I N  F O R  A L L - - - - - - */
+
+.maindivcontent {
+  padding: 4rem 17.5rem;
+}
+
+.maindivcontent h1 {
+  margin-bottom: 2rem;
+}
+
+.mainbutton {
+  background-color: var(--forest_green);
+  color: var(--beige);
+  border: none;
+  border-radius: var(--innerborder);
+  padding: 0.5rem;
+  width: 12rem;
+  text-align: center;
+  transition-timing-function: ease-in-out;
+  transition: 0.5s;
+}
+
+.mainbutton:hover {
+  background-color: var(--lime_green);
+  color: var(--forest_green);
+  box-shadow: 0.2rem 0.2rem var(--forest_green);
+}
 
 /* - - - - - - H O M E  P A G E  :  S E C T I O N - - - - - - */
 
@@ -180,7 +207,6 @@ nav {
 }
 
 .comicallylargetitle {
-  font-family: "Bebas Neue", serif;
   font-size: 6rem;
   line-height: 6rem;
 }
@@ -193,7 +219,6 @@ nav {
   font-size: 1.5rem;
   margin: 1rem 0;
   line-height: 1.7rem;
-  font-weight: 400;
 }
 
 .homebutton {
@@ -266,6 +291,81 @@ nav {
   font-size: 0.75rem;
 }
 
+.errorsection {
+  height: 652px;
+  position: relative;
+}
+
+.errorbg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.errortitle {
+  float: left;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 2;
+  padding: 8rem;
+}
+
+.cltbutbeige {
+  font-size: 8rem;
+  color: beige;
+}
+
+/* - - - - - - F O R M - - - - - - */
+
+form {
+  background-color: var(--greige);
+  border-radius: var(--mainborder);
+  padding: 2rem;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+input, select {
+  border: 1px solid #888888;
+  border-radius: var(--innerborder);
+  padding: 0.4rem 0.8rem;
+}
+
+.lastformdiv {
+  margin-bottom: 2rem;
+}
+
+.ingredientdiv {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.addbutton {
+  background-color: var(--light_green);
+  color: var(--beige);
+  border: none;
+  border-radius: var(--innerborder);
+  width: 6rem;
+  font-size: 0.8rem;
+  transition-timing-function: ease-in-out;
+  transition: 0.5s;
+}
+
+.addbutton:hover {
+  background-color: var(--forest_green);
+  color: var(--beige);
+  box-shadow: 0.2rem 0.2rem var(--light_green);
+}
 
 /* - - - - - - F O O T E R - - - - - - */
 

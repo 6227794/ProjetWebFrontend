@@ -2,7 +2,7 @@ import React from 'react';
 
 function RecipeListPage() {
     return (
-        <div>
+        <div className='maindivcontent'>
             <h1>Recipe List Page</h1>
         </div>
     );

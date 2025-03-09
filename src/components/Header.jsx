@@ -9,21 +9,21 @@ function Header() {
 
                 <ul className="mainnav">
                     <div className="dropdown">
-                        <Link className="dropbtn"  to={`/RecipeList`}>Répertoire</Link>
+                        <Link className="dropbtn mainlinknav" to={`/RecipeList`}>Répertoire</Link>
                         <div className="dropdown-content">
-                            <Link className="nav-link" to={`/`}> lien1 </Link>
-                            <Link className="nav-link" to={`/`}> lien2 </Link>
-                            <Link className="nav-link" to={`/`}> lien3 </Link>
+                            <Link className="" to={`/`}> lien1 </Link>
+                            <Link className="" to={`/`}> lien2 </Link>
+                            <Link className="" to={`/`}> lien3 </Link>
                         </div>
                     </div>
-                    <li className="nav-item"><Link className="nav-link" to={`/Conversion`}> Outil de conversion </Link></li>
-                    <li className="nav-item"><Link className="nav-link" to={`/AddRecipe`}> Ajouter une recette </Link></li>
+                    <li className=""><Link className="mainlinknav" to={`/Conversion`}> Outil de conversion </Link></li>
+                    <li className=""><Link className="mainlinknav" to={`/AddRecipe`}> Ajouter une recette </Link></li>
                     <div className="dropdown">
-                        <Link className="dropbtn"  to={`/Profil`}>Profil</Link>
+                        <Link className="dropbtn mainlinknav" to={`/Profil`}>Profil</Link>
                         <div className="dropdown-content">
-                            <Link className="nav-link" to={`/FavoriteRecipe`}> Favoris </Link>
-                            <Link className="nav-link" to={`/`}> lien2 </Link>
-                            <Link className="nav-link" to={`/`}> lien3 </Link>
+                            <Link className="" to={`/FavoriteRecipe`}> Favoris </Link>
+                            <Link className="" to={`/`}> lien2 </Link>
+                            <Link className="" to={`/`}> lien3 </Link>
                         </div>
                     </div>
                 </ul>

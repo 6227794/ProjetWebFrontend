@@ -2,7 +2,7 @@ import React from 'react';
 
 function FavoritePage() {
     return (
-        <div>
+        <div className='maindivcontent'>
             <h1>Favorite Recipe Page</h1>
         </div>
     );

@@ -7,7 +7,7 @@ function HomePage() {
         <div>
             <div className='homepagesection'>
                 <img className='homebg' src={homebg} alt="Vegetable and quinoa bowl" />
-                <div className='homebgeffect'></div>
+                <div className='homebgeffect' />
                 <div className='homeintro'>
                   <h1 className='comicallylargetitle'>C'est l'été{'\u00A0'}!</h1>
                 <h1>Enfin presque...</h1>

@@ -2,7 +2,7 @@ import React from 'react';
 
 function ConversionPage() {
     return (
-        <div>
+        <div className='maindivcontent'>
             <h1>Conversion Page</h1>
         </div>
     );
