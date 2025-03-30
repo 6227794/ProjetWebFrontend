@@ -1,4 +1,3 @@
-import React from 'react';
 import TempImg from '../assets/hazelnut-brownies.jpg';
 
 function TempRecipeCard() {
