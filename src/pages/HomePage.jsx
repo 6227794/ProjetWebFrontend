@@ -1,24 +1,33 @@
 import {useEffect, useState} from 'react';
 import homebg from '../assets/vegetable-quinoa-bowl.jpg'
-import TempRecipeCard from '../components/TempRecipeCard';
 import TempImg from "../assets/hazelnut-brownies.jpg";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function HomePage() {
-    /*const {id} = useParams();
-
-    const [recette, setRecette] = useState({
-    });
+    const [tabRecipes, setRecipes] = useState([]);
 
     useEffect(() => {
+        const loadRecette = async () => {
+            try {
+                const result1 = await axios.get(`http://localhost:8888/recette/getRecipe/4`);
+                const result2 = await axios.get(`http://localhost:8888/recette/getRecipe/16`);
+                const result3 = await axios.get(`http://localhost:8888/recette/getRecipe/25`);
+                const result4 = await axios.get(`http://localhost:8888/recette/getRecipe/10`);
+
+                setRecipes([
+                    result1.data,
+                    result2.data,
+                    result3.data,
+                    result4.data
+                ]);
+            } catch (error) {
+                console.error("Error fetching recettes:", error);
+            }
+        };
+
         loadRecette();
     }, []);
-
-    const loadRecette = async () => {
-        const result = await axios.get(`http://localhost:8888/api1/customer/${id}`);
-        setRecette(result.data);
-    }*/
 
     return (
         <div>
@@ -28,32 +37,36 @@ function HomePage() {
                 <div className='homeintro'>
                   <h1 className='comicallylargetitle'>C'est l'été{'\u00A0'}!</h1>
                 <h1>Enfin presque...</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque assumenda molestiae, aspernatur voluptate at illo modi soluta dolores beatae pariatur!</p>
-                <button className='homebutton'>Yumyumyum</button>  
+                <p>Dégustez l'été avec cette belle salade de couscous aux légumes frais, idéale pour vos repas ensoleillés !</p>
+                <a className='homebutton' href='http://localhost:8888/recette/getRecipe/6'>Cuisinez cette recette</a>
                 </div>
             </div>
             <div className='homepagearticle'>
                 <h1>Recettes à la une</h1>
-                <div className='homepagerecipes'>
-                    {/*<div className='recipecard'>
-                        <div>
-                            <img src={TempImg} alt="Hazelnut brownies"/>
-                            <h2>{recette.nomRecette}</h2>
-                            <p>Nombre de portion : {recette.nbrPortion}</p>
-                            <p>Temps de préparation : {recette.tempsPrep}</p>
-                            <p>Temps de cuisson : {recette.tempsCuisson}</p>
-                        </div>
-                        <div className='tagsdisplay'>
-                            {recette.tags.map((tag, index) => (
-                                <p className='recipetag' key={index}>{tag}</p>
-                            ))}
-                        </div>
-                    </div>*/}
-                    <TempRecipeCard/>
-                    <TempRecipeCard/>
-                    <TempRecipeCard/>
-                    <TempRecipeCard/>
-                </div>
+                    <div className='recipedisplay'>
+                        {
+                            tabRecipes.map((data) => (
+                                <Link to={`http://localhost:8888/recette/getRecipe/${data.id}`} key={data.id}
+                                      className='linkrecipecard'>
+                                    <div className='recipecard'>
+                                        <div>
+                                            <img src={TempImg} alt="Hazelnut brownies"/>
+                                            <h2>{data.nomRecette}</h2>
+                                            <p>Nombre de portion : {data.nbrPortion}</p>
+                                            <p>Temps de préparation : {data.tempsPrep}</p>
+                                            <p>Temps de cuisson : {data.tempsCuisson}</p>
+                                        </div>
+                                        <div className='tagsdisplay'>
+                                            {data.tags.map((tag, index) => (
+                                                // Utiliser une valeur unique pour `key` si possible
+                                                <p className='recipetag' key={tag || index}>{tag}</p>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))
+                        }
+                    </div>
             </div>
         </div>
 

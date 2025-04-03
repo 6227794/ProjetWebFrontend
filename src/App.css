@@ -224,7 +224,7 @@ nav {
 .homebutton {
   background-color: var(--lime_green);
   color: var(--dark_green);
-  border: none;
+  text-decoration: none;
   border-radius: var(--innerborder);
   padding: 0.4rem 3rem;
   font-family: "Lobster", sans-serif;
@@ -268,6 +268,15 @@ nav {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100%;
+  transition-timing-function: ease-in-out;
+  transition: 0.5s;
+}
+
+.recipecard:hover{
+  box-shadow: 0.2rem 0.2rem 0.2rem #888888;
+  position: relative;
+  top: -0.2rem;
 }
 
 .recipecard h2 {
@@ -327,6 +336,13 @@ nav {
   font-size: 8rem;
   color: beige;
 }
+
+.linkrecipecard{
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
 
 /* - - - - - - F O R M - - - - - - */
 
