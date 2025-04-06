@@ -350,12 +350,17 @@ form {
   background-color: var(--greige);
   border-radius: var(--mainborder);
   padding: 2rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 form div {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 input, select {
@@ -377,12 +382,16 @@ input, select {
 
 .addbutton {
   background-color: var(--light_green);
+  padding: 0.3rem;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  overflow: clip;
   color: var(--beige);
   border: none;
   border-radius: var(--innerborder);
   width: 6rem;
   font-size: 0.8rem;
-  transition-timing-function: ease-in-out;
   transition: 0.5s;
 }
 
@@ -390,6 +399,22 @@ input, select {
   background-color: var(--forest_green);
   color: var(--beige);
   box-shadow: 0.2rem 0.2rem var(--light_green);
+}
+
+/* forms spécifiques: to export? */
+.fifthofspace{
+  width: 20%;
+}
+
+#etapeDiv{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.numEtape{
+  line-height: 1rem;
+  padding-top: 2rem;
 }
 
 /* - - - - - - F O O T E R - - - - - - */

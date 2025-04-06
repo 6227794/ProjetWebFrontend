@@ -38,8 +38,10 @@ function RecipeListPage() {
                                     <p>Temps de cuisson : {data.tempsCuisson}</p>
                                 </div>
                                 <div className='tagsdisplay'>
-                                    {data.tags.map((tag, index) => (
-                                        <p className='recipetag' key={index}>{tag}</p>
+                                    {data.tags.map((tagRecette, index) => (
+                                        <p className='recipetag' key={index}>
+                                            {tagRecette.tag ? tagRecette.tag.tagNom : ""}
+                                        </p>
                                     ))}
                                 </div>
                             </div>

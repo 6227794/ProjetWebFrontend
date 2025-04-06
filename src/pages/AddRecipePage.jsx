@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
@@ -10,33 +10,79 @@ function AddRecipePage() {
         tempsCuisson: "",
         nbrPortion: "",
         imageUrl: "",
-        user: "",
-        categorie: ""
+        user: {id: 1},
+        categorie: {id: 1}
     })
+
+    const [tabUnites, setUnites] = useState([]);
+
+    const [tabIngredientRecette, setIngredientRecette] = useState([]);
+
+    const [tabInstruction, setInstruction] = useState([{
+        numEtape: "",
+        description: "",
+        recette: {id: ""}
+    }]);
 
     const recipeValues = (e) => {
         setRecette({...recette, [e.target.name]: e.target.value})
     }
 
+    const instructionValues = (index, e) => {
+        const updatedInstructions = [...tabInstruction];
+        updatedInstructions[index] = {
+            ...updatedInstructions[index],
+            [e.target.name]: e.target.value,
+        };
+
+        updatedInstructions[index].numEtape = (index + 1).toString();
+        setInstruction(updatedInstructions);
+    }
+
     const navigate = useNavigate();
 
-    const submitNewRecipe = (e) => {
+    const submitNewRecipe = async (e) => {
         e.preventDefault();
-        axios.post("http://localhost:8888/recette/newRecipe", recette)
-            .then(() => {navigate("/")})
-            .catch((error) => {
+
+        try {
+            const result = await axios.post("http://localhost:8888/recette/newRecipe", recette);
+
+            const instructionsPromises = [];
+
+            tabInstruction.forEach((step) => {
+                //step.recette.id = result.data;
+                const instructionPost = axios.post("http://localhost:8888/instruction/newInstruction", step);
+                instructionsPromises.push(instructionPost);
+            });
+
+            await Promise.all(instructionsPromises);
+
+            navigate(`/recette/getRecipe/${result.data}`);
+        }catch(error) {
                 console.log(error);
-            })
+        }
+    }
+
+    const populateUnits = async () => {
+        const result = await axios.get(`http://localhost:8888/unite/getAllUnite`);
+        setUnites(result.data);
     }
 
     function addIngredientInput() {
         console.log("add ingredient")
-        // var divIngredient = document.getElementById("ingredientDiv");
-        // document.body.appendChild(divIngredient);
+        var listeIngredients = document.getElementById("listeIngredients");
     }
+
     function addEtapeInput() {
-        console.log("add ingredient")
+        setInstruction([
+            ...tabInstruction,
+            {numEtape: "", description: ""}
+        ]);
     }
+
+    useEffect(() => {
+        populateUnits();
+    }, []);
 
     return (
         <div className='maindivcontent'>
@@ -62,32 +108,56 @@ function AddRecipePage() {
                     <input type="text" id="nbrPortion" name="nbrPortion"
                            onChange={(e) => recipeValues(e)}/>
                 </div>
-                {/*
-                <div className='ingredientdiv' id='ingredientdiv'>
-                    <div>
-                        <label htmlFor="ingredient">Qtt</label>
-                        <input type="text" id="ingredient" name="ingredient" />
-                    </div>
-                    <div>
-                        <label htmlFor="ingredient">Unite</label>
-                        <select name="unite" id="unite">
-                            // MAP UNITE?
-                            <option value="g">g</option>
-                            <option value="ml">ml</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label htmlFor="ingredientNom">Nom de l'ingrédient</label>
-                        <input type="text" id="ingredientNom" name="ingredientNom" />
+
+                {/* Liste Ingrédients*/}
+                <div className='listeIngredients'>
+                    <div className='ingredientdiv' id='ingredientdiv'>
+                        <div className='fifthofspace'>
+                            <label htmlFor="ingredientQtt">Qtt</label>
+                            <input type="text" id="ingredientQtt" name="ingredientQtt"/>
+                        </div>
+                        <div className='fifthofspace'>
+                            <label htmlFor="ingredientUnite">Unite</label>
+                            {tabUnites && tabUnites.length > 0 ? (
+                                <select name="ingredientUnite" id="ingredientUnite">
+                                    {tabUnites.map((unite) => (
+                                        <option key={unite.id} value={unite.id}>
+                                            {unite.uniteNom}
+                                        </option>
+                                    ))}
+                                </select>
+                            ) : (
+                                <p>erreur</p>
+                            )}
+                        </div>
+                        <div>
+                            <label htmlFor="ingredientNom">Nom de l'ingrédient</label>
+                            <input type="text" id="ingredientNom" name="ingredientNom"/>
+                        </div>
                     </div>
                 </div>
-                <button type="button" className='addbutton' onClick={addIngredientInput}>Ajouter un ingrédient</button>
-                <div id='etapediv'>
-                    <label htmlFor="description">Instructions</label>
-                    <input type="text" id="description" name="description" />
+                <a className='addbutton' onClick={addIngredientInput}>Ajouter un ingrédient</a>
+
+                {/* Liste Étapes*/}
+                <div id='listeEtapes'>
+                    {tabInstruction.map((instruction, index) => (
+                        <div id='etapeDiv' key={index}>
+                            <p className='numEtape'>{index + 1}.</p>
+                            <div className='etapeDesc'>
+                                <label htmlFor={`description-${index}`}>Instruction</label>
+                                <input
+                                    type="text"
+                                    id={`description-${index}`}
+                                    name="description"
+                                    value={instruction.description}
+                                    onChange={(e) => instructionValues(index, e)} // Mise à jour de l'étape spécifique
+                                />
+                            </div>
+                        </div>
+                    ))}
                 </div>
-                <button type="button" className='addbutton' onClick={addEtapeInput}>Ajouter une étape</button>
-                */}
+                <a className='addbutton' onClick={addEtapeInput}>Ajouter une étape</a>
+
                 <button type="submit" className="mainbutton">Publier</button>
             </form>
         </div>

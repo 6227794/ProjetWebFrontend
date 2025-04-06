@@ -57,9 +57,10 @@ function HomePage() {
                                             <p>Temps de cuisson : {data.tempsCuisson}</p>
                                         </div>
                                         <div className='tagsdisplay'>
-                                            {data.tags.map((tag, index) => (
-                                                // Utiliser une valeur unique pour `key` si possible
-                                                <p className='recipetag' key={tag || index}>{tag}</p>
+                                            {data.tags.map((tagRecette, index) => (
+                                                <p className='recipetag' key={index}>
+                                                    {tagRecette.tag ? tagRecette.tag.tagNom : ""}
+                                                </p>
                                             ))}
                                         </div>
                                     </div>
