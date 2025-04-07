@@ -11,12 +11,13 @@ function AddRecipePage() {
         nbrPortion: "",
         imageUrl: "",
         user: {id: 1},
-        categorie: {id: 1}
+        categorie: {id: 1},
+        tags: [],
+        ingredients: [],
+        etapes: []
     })
 
     const [tabUnites, setUnites] = useState([]);
-
-    const [tabIngredientRecette, setIngredientRecette] = useState([]);
 
     const [tabInstruction, setInstruction] = useState([{
         numEtape: "",
@@ -28,17 +29,6 @@ function AddRecipePage() {
         setRecette({...recette, [e.target.name]: e.target.value})
     }
 
-    const instructionValues = (index, e) => {
-        const updatedInstructions = [...tabInstruction];
-        updatedInstructions[index] = {
-            ...updatedInstructions[index],
-            [e.target.name]: e.target.value,
-        };
-
-        updatedInstructions[index].numEtape = (index + 1).toString();
-        setInstruction(updatedInstructions);
-    }
-
     const navigate = useNavigate();
 
     const submitNewRecipe = async (e) => {
@@ -46,16 +36,6 @@ function AddRecipePage() {
 
         try {
             const result = await axios.post("http://localhost:8888/recette/newRecipe", recette);
-
-            const instructionsPromises = [];
-
-            tabInstruction.forEach((step) => {
-                //step.recette.id = result.data;
-                const instructionPost = axios.post("http://localhost:8888/instruction/newInstruction", step);
-                instructionsPromises.push(instructionPost);
-            });
-
-            await Promise.all(instructionsPromises);
 
             navigate(`/recette/getRecipe/${result.data}`);
         }catch(error) {
