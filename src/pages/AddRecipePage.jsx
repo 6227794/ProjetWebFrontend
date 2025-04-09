@@ -12,21 +12,28 @@ function AddRecipePage() {
         imageUrl: "",
         user: {id: 1},
         categorie: {id: 1},
-        tags: [],
-        ingredients: [],
-        etapes: []
+        tags: [{
+
+        }],
+        ingredients: [{
+            quantite : "",
+            unite : "",
+            ingredientNom : ""
+        }],
+        etapes: [{
+            numEtape : "",
+            description : ""
+        }]
     })
 
     const [tabUnites, setUnites] = useState([]);
 
-    const [tabInstruction, setInstruction] = useState([{
-        numEtape: "",
-        description: "",
-        recette: {id: ""}
-    }]);
+    const [tabCategories, setCategories] = useState([]);
 
     const recipeValues = (e) => {
         setRecette({...recette, [e.target.name]: e.target.value})
+        console.log(e);
+        console.log(recette);
     }
 
     const navigate = useNavigate();
@@ -48,20 +55,35 @@ function AddRecipePage() {
         setUnites(result.data);
     }
 
+    const populateCategories = async () => {
+        const result = await axios.get(`http://localhost:8888/categorie/getAllCategorie`);
+        setCategories(result.data);
+    }
+
     function addIngredientInput() {
         console.log("add ingredient")
         var listeIngredients = document.getElementById("listeIngredients");
     }
 
     function addEtapeInput() {
-        setInstruction([
-            ...tabInstruction,
-            {numEtape: "", description: ""}
-        ]);
+        setRecette({...recette, etapes: [...recette.etapes, {numEtape: "", description: ""}]});
+    }
+
+    const instructionValues = (index, e)=> {
+        const majEtapes = [...recette.etapes];
+        const updateEtape = { ...majEtapes[index] };
+
+        updateEtape.numEtape = index+1;
+        updateEtape.description = e.target.value;
+
+        majEtapes[index] = updateEtape;
+
+        setRecette({ ...recette, etapes: majEtapes });
     }
 
     useEffect(() => {
         populateUnits();
+        populateCategories();
     }, []);
 
     return (
@@ -72,6 +94,20 @@ function AddRecipePage() {
                     <label htmlFor="nomRecette">Nom de la recette</label>
                     <input type="text" id="nomRecette" name="nomRecette"
                            placeholder="Nom de la recette" required onChange={(e) => recipeValues(e)}/>
+                </div>
+                <div>
+                    <label htmlFor="categorie">Catégorie</label>
+                    {tabCategories && tabCategories.length > 0 ? (
+                        <select name="categorie" id="categorie" onChange={(e) => recipeValues(e)}>
+                            {tabCategories.map((categorie) => (
+                                <option key={categorie.id} value={categorie.id} >
+                                    {categorie.categorieNom}
+                                </option>
+                            ))}
+                        </select>
+                    ) : (
+                        <p>erreur</p>
+                    )}
                 </div>
                 <div>
                     <label htmlFor="tempsPrep">Temps de préparation</label>
@@ -118,9 +154,8 @@ function AddRecipePage() {
                 </div>
                 <a className='addbutton' onClick={addIngredientInput}>Ajouter un ingrédient</a>
 
-                {/* Liste Étapes*/}
                 <div id='listeEtapes'>
-                    {tabInstruction.map((instruction, index) => (
+                    {recette.etapes.map((instruction, index) => (
                         <div id='etapeDiv' key={index}>
                             <p className='numEtape'>{index + 1}.</p>
                             <div className='etapeDesc'>
@@ -130,7 +165,7 @@ function AddRecipePage() {
                                     id={`description-${index}`}
                                     name="description"
                                     value={instruction.description}
-                                    onChange={(e) => instructionValues(index, e)} // Mise à jour de l'étape spécifique
+                                    onChange={(e) => instructionValues(index, e)}
                                 />
                             </div>
                         </div>
