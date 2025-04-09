@@ -10,6 +10,8 @@ import FavoritePage from './pages/FavoritePage';
 import ProfilPage from './pages/ProfilPage';
 import RecipeListPage from './pages/RecipeListPage';
 import ViewRecipePage from './pages/ViewRecipePage';
+import ConnexionPage from './pages/ConnexionPage';
+import InscriptionPage from './pages/InscriptionPage';
 import Header from './components/Header';
 import Footer from './components/Footer'
 
@@ -21,6 +23,8 @@ function App() {
         <Header/>
         <Routes>
           <Route path="/" element={<HomePage/>}/>
+          <Route path="/Connexion" element={<ConnexionPage/>}/>
+          <Route path="/Inscription" element={<InscriptionPage/>}/>
           <Route path="/AddRecipe" element={<AddRecipePage/>}/>
           <Route path="/Conversion" element={<ConversionPage/>}/>
           <Route path="/RecipeList" element={<RecipeListPage/>}/>
