@@ -11,7 +11,9 @@ function AddRecipePage() {
         nbrPortion: "",
         imageUrl: "",
         user: {id: 1},
-        categorie: {id: 1},
+        categorie: {
+            id: 0,
+            categorieNom: ""},
         tags: [{
 
         }],
@@ -32,13 +34,14 @@ function AddRecipePage() {
 
     const recipeValues = (e) => {
         setRecette({...recette, [e.target.name]: e.target.value})
-        console.log(e);
         console.log(recette);
     }
 
     const navigate = useNavigate();
 
     const submitNewRecipe = async (e) => {
+        // clean empty values des instructions et ingredients
+
         e.preventDefault();
 
         try {
@@ -61,8 +64,9 @@ function AddRecipePage() {
     }
 
     function addIngredientInput() {
-        console.log("add ingredient")
-        var listeIngredients = document.getElementById("listeIngredients");
+        console.log("add ingredient");
+        //var listeIngredients = document.getElementById("listeIngredients");
+        setRecette({...recette, ingredients: [...recette.ingredients, {quantite : "", unite : "", ingredientNom : ""}]});
     }
 
     function addEtapeInput() {
@@ -79,6 +83,19 @@ function AddRecipePage() {
         majEtapes[index] = updateEtape;
 
         setRecette({ ...recette, etapes: majEtapes });
+    }
+
+    const categoryValue = (e) => {
+        const majCategory = {...recette.categorie};
+
+        majCategory.id = e.target.value;
+        var x = document.getElementById("categorie");
+        var i = x.selectedIndex;
+        majCategory.categorieNom = x.options[i].text;
+
+        setRecette({...recette, categorie: majCategory})
+
+        console.log(recette);
     }
 
     useEffect(() => {
@@ -98,7 +115,7 @@ function AddRecipePage() {
                 <div>
                     <label htmlFor="categorie">Catégorie</label>
                     {tabCategories && tabCategories.length > 0 ? (
-                        <select name="categorie" id="categorie" onChange={(e) => recipeValues(e)}>
+                        <select name="categorie" id="categorie" onChange={(e) => categoryValue(e)}>
                             {tabCategories.map((categorie) => (
                                 <option key={categorie.id} value={categorie.id} >
                                     {categorie.categorieNom}
