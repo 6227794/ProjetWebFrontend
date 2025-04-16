@@ -401,6 +401,24 @@ input, select {
   box-shadow: 0.2rem 0.2rem var(--light_green);
 }
 
+.taglabel{
+  margin-bottom: 1rem;
+}
+
+.tagsformdisplay{
+  display: inline-grid;
+  grid-template-columns: auto auto auto auto;
+}
+
+.tagcheckbox{
+  display: flex;
+  flex-direction: row;
+}
+
+.tagcheckbox input{
+  margin-right: 0.5rem;
+}
+
 /* forms spécifiques: to export? */
 .fifthofspace{
   width: 20%;
@@ -416,7 +434,6 @@ input, select {
   line-height: 1rem;
   padding-top: 2rem;
 }
-
 /* - - - - - - F O O T E R - - - - - - */
 
 footer {

@@ -32,6 +32,8 @@ function AddRecipePage() {
 
     const [tabCategories, setCategories] = useState([]);
 
+    const [tabTags, setTags] = useState([])
+
     const recipeValues = (e) => {
         setRecette({...recette, [e.target.name]: e.target.value})
         console.log(recette);
@@ -61,6 +63,11 @@ function AddRecipePage() {
     const populateCategories = async () => {
         const result = await axios.get(`http://localhost:8888/categorie/getAllCategorie`);
         setCategories(result.data);
+    }
+
+    const populateTags = async () => {
+        const result = await axios.get(`http://localhost:8888/tag/getAllTag`);
+        setTags(result.data);
     }
 
     function addIngredientInput() {
@@ -101,6 +108,7 @@ function AddRecipePage() {
     useEffect(() => {
         populateUnits();
         populateCategories();
+        populateTags();
     }, []);
 
     return (
@@ -117,7 +125,7 @@ function AddRecipePage() {
                     {tabCategories && tabCategories.length > 0 ? (
                         <select name="categorie" id="categorie" onChange={(e) => categoryValue(e)}>
                             {tabCategories.map((categorie) => (
-                                <option key={categorie.id} value={categorie.id} >
+                                <option key={categorie.id} value={categorie.id}>
                                     {categorie.categorieNom}
                                 </option>
                             ))}
@@ -189,6 +197,23 @@ function AddRecipePage() {
                     ))}
                 </div>
                 <a className='addbutton' onClick={addEtapeInput}>Ajouter une étape</a>
+                <div>
+                    <label htmlFor="tags" className="taglabel">Tags descriptif</label>
+                    {tabTags && tabTags.length > 0 ? (
+                        <div name="tags" id="tags" className="tagsformdisplay">
+                            {tabTags.map((tag) => (
+                                <div key={tag.id} className="tagcheckbox">
+                                    <input type="checkbox" value={tag.id}/>
+                                    <label htmlFor={tag.id}>
+                                        {tag.tagNom}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p>erreur</p>
+                    )}
+                </div>
 
                 <button type="submit" className="mainbutton">Publier</button>
             </form>
