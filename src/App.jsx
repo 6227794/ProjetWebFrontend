@@ -28,7 +28,7 @@ function App() {
           <Route path="/AddRecipe" element={<AddRecipePage/>}/>
           <Route path="/Conversion" element={<ConversionPage/>}/>
           <Route path="/RecipeList" element={<RecipeListPage/>}/>
-          <Route path="/ViewRecipe" element={<ViewRecipePage/>}/>
+          <Route path="/ViewRecipe/:id" element={<ViewRecipePage/>}/>
           <Route path="/Profil" element={<ProfilPage/>}/>
           <Route path="/FavoriteRecipe" element={<FavoritePage/>}/>
           <Route path="/About" element={<AboutPage/>}/>
