@@ -3,6 +3,7 @@ import homebg from '../assets/vegetable-quinoa-bowl.jpg'
 import TempImg from "../assets/hazelnut-brownies.jpg";
 import axios from "axios";
 import {Link} from "react-router-dom";
+import {apiUrl} from "../../config.js";
 
 function HomePage() {
     const [tabRecipes, setRecipes] = useState([]);
@@ -10,10 +11,10 @@ function HomePage() {
     useEffect(() => {
         const loadRecette = async () => {
             try {
-                const result1 = await axios.get(`http://localhost:8888/recette/getRecipe/4`);
-                const result2 = await axios.get(`http://localhost:8888/recette/getRecipe/16`);
-                const result3 = await axios.get(`http://localhost:8888/recette/getRecipe/25`);
-                const result4 = await axios.get(`http://localhost:8888/recette/getRecipe/10`);
+                const result1 = await axios.get(`${apiUrl}/recette/getRecipe/4`);
+                const result2 = await axios.get(`${apiUrl}/recette/getRecipe/16`);
+                const result3 = await axios.get(`${apiUrl}/recette/getRecipe/25`);
+                const result4 = await axios.get(`${apiUrl}/recette/getRecipe/10`);
 
                 setRecipes([
                     result1.data,
@@ -38,7 +39,7 @@ function HomePage() {
                   <h1 className='comicallylargetitle'>C'est l'été{'\u00A0'}!</h1>
                 <h1>Enfin presque...</h1>
                 <p>Dégustez l'été avec cette belle salade de couscous aux légumes frais, idéale pour vos repas ensoleillés !</p>
-                <a className='homebutton' href='http://localhost:8888/recette/getRecipe/6'>Cuisinez cette recette</a>
+                <a className='homebutton' href={`${apiUrl}/recette/getRecipe/6`}>Cuisinez cette recette</a>
                 </div>
             </div>
             <div className='homepagearticle'>
@@ -46,7 +47,7 @@ function HomePage() {
                     <div className='recipedisplay'>
                         {
                             tabRecipes.map((data) => (
-                                <Link to={`http://localhost:8888/recette/getRecipe/${data.id}`} key={data.id}
+                                <Link to={`/ViewRecipe/${data.id}`} key={data.id}
                                       className='linkrecipecard'>
                                     <div className='recipecard'>
                                         <div>

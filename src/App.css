@@ -477,13 +477,13 @@ footer a {
   flex-shrink: 0;
 }
 
-.toTheMiddle {
+.recipeimage {
   display: flex;
   gap: 2rem;
   align-items: flex-start;
 }
 
-.toTheRight {
+.recipedescription {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -492,18 +492,33 @@ footer a {
 
 .titleSpace {
   display: flex;
-  align-items: center;
-  gap: 1.5rem;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.printButton {
+.printButton{
   background-color: var(--forest_green);
   color: var(--beige);
-  text-align: center;
-  width: 216px;
-  height: 44px;
-  padding: 0.5rem 1rem;
+  border-radius: var(--innerborder);
+  text-decoration: none;
+  padding: 0.5rem 3rem;
+  line-height: 2rem;
+  max-height: 3rem;
   border: none;
-  position: relative;
   cursor: pointer;
+  transition-timing-function: ease-in-out;
+  transition: 0.5s;
+}
+
+.printButton:hover {
+  background-color: var(--lime_green);
+  color: var(--forest_green);
+  box-shadow: 0.2rem 0.2rem var(--forest_green);
+}
+
+.tagsrecipedisplay {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.5rem 0.75rem;
+  flex-flow: row wrap;
 }

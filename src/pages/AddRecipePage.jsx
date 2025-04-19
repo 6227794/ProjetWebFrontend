@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import {apiUrl} from "../../config.js";
 
 function AddRecipePage() {
 
@@ -47,7 +48,7 @@ function AddRecipePage() {
         e.preventDefault();
 
         try {
-            const result = await axios.post("http://localhost:8888/recette/newRecipe", recette);
+            const result = await axios.post(`${apiUrl}/recette/newRecipe`, recette);
 
             navigate(`/recette/getRecipe/${result.data}`);
         }catch(error) {
@@ -56,17 +57,17 @@ function AddRecipePage() {
     }
 
     const populateUnits = async () => {
-        const result = await axios.get(`http://localhost:8888/unite/getAllUnite`);
+        const result = await axios.get(`${apiUrl}/unite/getAllUnite`);
         setUnites(result.data);
     }
 
     const populateCategories = async () => {
-        const result = await axios.get(`http://localhost:8888/categorie/getAllCategorie`);
+        const result = await axios.get(`${apiUrl}/categorie/getAllCategorie`);
         setCategories(result.data);
     }
 
     const populateTags = async () => {
-        const result = await axios.get(`http://localhost:8888/tag/getAllTag`);
+        const result = await axios.get(`${apiUrl}/tag/getAllTag`);
         setTags(result.data);
     }
 
