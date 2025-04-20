@@ -20,7 +20,7 @@ function AddRecipePage() {
         }],
         ingredients: [{
             quantite : "",
-            unite : "",
+            uniteNom : "",
             ingredientNom : ""
         }],
         etapes: [{
@@ -47,10 +47,11 @@ function AddRecipePage() {
 
         e.preventDefault();
 
+        console.log(recette);
         try {
             const result = await axios.post(`${apiUrl}/recette/newRecipe`, recette);
 
-            navigate(`/recette/getRecipe/${result.data}`);
+            navigate(`/ViewRecipe/${result.data}`);
         }catch(error) {
                 console.log(error);
         }
@@ -72,9 +73,7 @@ function AddRecipePage() {
     }
 
     function addIngredientInput() {
-        console.log("add ingredient");
-        //var listeIngredients = document.getElementById("listeIngredients");
-        setRecette({...recette, ingredients: [...recette.ingredients, {quantite : "", unite : "", ingredientNom : ""}]});
+        setRecette({...recette, ingredients: [...recette.ingredients, {quantite : "", uniteNom : "", ingredientNom : ""}]});
     }
 
     function addEtapeInput() {
@@ -93,17 +92,32 @@ function AddRecipePage() {
         setRecette({ ...recette, etapes: majEtapes });
     }
 
+    const ingredientsValues = (index, e) => {
+        const { name, value } = e.target;
+
+        const updatedIngredients = [...recette.ingredients];
+        const ingredientToUpdate = { ...updatedIngredients[index] };
+
+        ingredientToUpdate[name] = value;
+
+        updatedIngredients[index] = ingredientToUpdate;
+
+        setRecette({ ...recette, ingredients: updatedIngredients });
+    };
+
     const categoryValue = (e) => {
-        const majCategory = {...recette.categorie};
+        const selectedIndex = e.target.selectedIndex;
+        const selectedOption = e.target.options[selectedIndex];
+        const selectedId = parseInt(e.target.value, 10);
+        const selectedName = selectedOption.text;
 
-        majCategory.id = e.target.value;
-        var x = document.getElementById("categorie");
-        var i = x.selectedIndex;
-        majCategory.categorieNom = x.options[i].text;
-
-        setRecette({...recette, categorie: majCategory})
-
-        console.log(recette);
+        setRecette({
+            ...recette,
+            categorie: {
+                id: selectedId,
+                categorieNom: selectedName
+            }
+        });
     }
 
     useEffect(() => {
@@ -125,6 +139,7 @@ function AddRecipePage() {
                     <label htmlFor="categorie">Catégorie</label>
                     {tabCategories && tabCategories.length > 0 ? (
                         <select name="categorie" id="categorie" onChange={(e) => categoryValue(e)}>
+                            <option value="" hidden>choisir une catégorie</option>
                             {tabCategories.map((categorie) => (
                                 <option key={categorie.id} value={categorie.id}>
                                     {categorie.categorieNom}
@@ -136,7 +151,7 @@ function AddRecipePage() {
                     )}
                 </div>
                 <div>
-                    <label htmlFor="tempsPrep">Temps de préparation</label>
+                <label htmlFor="tempsPrep">Temps de préparation</label>
                     <input type="text" id="tempsPrep" name="tempsPrep"
                            onChange={(e) => recipeValues(e)}/>
                 </div>
@@ -153,30 +168,47 @@ function AddRecipePage() {
 
                 {/* Liste Ingrédients*/}
                 <div className='listeIngredients'>
-                    <div className='ingredientdiv' id='ingredientdiv'>
-                        <div className='fifthofspace'>
-                            <label htmlFor="ingredientQtt">Qtt</label>
-                            <input type="text" id="ingredientQtt" name="ingredientQtt"/>
+                    {recette.ingredients.map((ingredient, index) => (
+                        <div className='ingredientdiv' id='ingredientdiv'  key={index}>
+                            <div className='fifthofspace'>
+                                <label htmlFor="quantite">Qtt</label>
+                                <input
+                                    type="text"
+                                    id="ingredientQtt"
+                                    name="quantite"
+                                    value={ingredient.quantite}
+                                    onChange={(e) => ingredientsValues(index, e)}
+                                />
+                            </div>
+                            <div className='fifthofspace'>
+                                <label htmlFor="ingredientUnite">Unité</label>
+                                {tabUnites && tabUnites.length > 0 ? (
+                                    <select name="uniteNom"
+                                            id="uniteNom"
+                                            onChange={(e) => ingredientsValues(index, e)}>
+                                        <option value="" hidden>choisir une unité</option>
+                                        {tabUnites.map((unite) => (
+                                            <option key={unite.id} value={unite.uniteNom}>
+                                                {unite.uniteNom}
+                                            </option>
+                                        ))}
+                                    </select>
+                                ) : (
+                                    <p>erreur</p>
+                                )}
+                            </div>
+                            <div>
+                                <label htmlFor="ingredientNom">Nom de l'ingrédient</label>
+                                <input
+                                    type="text"
+                                    id="ingredientNom"
+                                    name="ingredientNom"
+                                    value={ingredient.ingredientNom}
+                                    onChange={(e) => ingredientsValues(index, e)}
+                                />
+                            </div>
                         </div>
-                        <div className='fifthofspace'>
-                            <label htmlFor="ingredientUnite">Unite</label>
-                            {tabUnites && tabUnites.length > 0 ? (
-                                <select name="ingredientUnite" id="ingredientUnite">
-                                    {tabUnites.map((unite) => (
-                                        <option key={unite.id} value={unite.id}>
-                                            {unite.uniteNom}
-                                        </option>
-                                    ))}
-                                </select>
-                            ) : (
-                                <p>erreur</p>
-                            )}
-                        </div>
-                        <div>
-                            <label htmlFor="ingredientNom">Nom de l'ingrédient</label>
-                            <input type="text" id="ingredientNom" name="ingredientNom"/>
-                        </div>
-                    </div>
+                    ))}
                 </div>
                 <a className='addbutton' onClick={addIngredientInput}>Ajouter un ingrédient</a>
 

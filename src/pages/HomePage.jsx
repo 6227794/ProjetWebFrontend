@@ -39,7 +39,7 @@ function HomePage() {
                   <h1 className='comicallylargetitle'>C'est l'été{'\u00A0'}!</h1>
                 <h1>Enfin presque...</h1>
                 <p>Dégustez l'été avec cette belle salade de couscous aux légumes frais, idéale pour vos repas ensoleillés !</p>
-                <a className='homebutton' href={`${apiUrl}/recette/getRecipe/6`}>Cuisinez cette recette</a>
+                <a className='homebutton' href={`/ViewRecipe/6`}>Cuisinez cette recette</a>
                 </div>
             </div>
             <div className='homepagearticle'>
