@@ -48,9 +48,9 @@ function ViewRecipePage() {
                             {viewRecipe.ingredients && viewRecipe.ingredients.length > 0 ? (
                                 viewRecipe.ingredients.map((ingredientRecetteDTO, index) => (
                                     <li key={index}>
-                                        {ingredientRecetteDTO.quantite || ""} + {" "}
-                                        + {ingredientRecetteDTO.uniteNom || ""} + {" "}
-                                        + {ingredientRecetteDTO.ingredientNom || ""}
+                                        {ingredientRecetteDTO.quantite || ""} {" "}
+                                        {ingredientRecetteDTO.uniteNom || ""} {" "}
+                                        {ingredientRecetteDTO.ingredientNom || ""}
                                     </li>
                                 ))
                             ) : (
