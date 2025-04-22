@@ -143,7 +143,7 @@ function UpdateRecipePage() {
 
     return (
         <div className='maindivcontent'>
-            <h1>Ajouter une recette</h1>
+            <h1>Modifier la recette</h1>
             <form onSubmit={(e) => updateRecipe(e)} method="post">
                 <div>
                     <label htmlFor="nomRecette">Nom de la recette</label>

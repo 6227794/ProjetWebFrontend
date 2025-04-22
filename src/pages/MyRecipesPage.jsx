@@ -28,7 +28,7 @@ function MyRecipesPage() {
 
     return (
         <div className='maindivcontent'>
-            <h1>Favorite Recipe Page</h1>
+            <h1>Mes recettes</h1>
             <div className='myrecipedisplay'>
                 {
                     tabRecipes.map((data) => (
