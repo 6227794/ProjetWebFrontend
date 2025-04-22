@@ -13,12 +13,8 @@ function AddRecipePage() {
         imageUrl: "",
         user: {id: 1},
         categorie: {
-            id: 1,
-            categorieNom: "Boissons"},
-        selectedTags: [{
-            id : "",
-            tagNom : ""
-        }],
+            id: 1},
+        selectedTags: [],
         ingredients: [{
             quantite : "",
             uniteNom : "g",
@@ -37,25 +33,7 @@ function AddRecipePage() {
     const [tabTags, setTags] = useState([])
 
     const recipeValues = (e) => {
-        setRecette({...recette, [e.target.name]: e.target.value})
-        console.log(recette);
-    }
-
-    const navigate = useNavigate();
-
-    const submitNewRecipe = async (e) => {
-        // clean empty values des instructions et ingredients
-
-        e.preventDefault();
-
-        console.log(recette);
-        try {
-            const result = await axios.post(`${apiUrl}/recette/newRecipe`, recette);
-
-            navigate(`/ViewRecipe/${result.data}`);
-        }catch(error) {
-                console.log(error);
-        }
+        setRecette({...recette, [e.target.name]: e.target.value});
     }
 
     const populateUnits = async () => {
@@ -107,18 +85,42 @@ function AddRecipePage() {
     };
 
     const categoryValue = (e) => {
-        const selectedIndex = e.target.selectedIndex;
-        const selectedOption = e.target.options[selectedIndex];
-        const selectedId = parseInt(e.target.value, 10);
-        const selectedName = selectedOption.text;
+        const selectedId = e.target.value;
 
         setRecette({
             ...recette,
             categorie: {
-                id: selectedId,
-                categorieNom: selectedName
+                id: selectedId
             }
         });
+    }
+
+    const tagsValue = (e) => {
+        const updateSelectedTags = [...recette.selectedTags];
+        if(e.target.checked){
+            updateSelectedTags.push({ id: e.target.value})
+        } else {
+            updateSelectedTags.pop({ id: e.target.value})
+        }
+
+        setRecette({...recette, selectedTags: updateSelectedTags});
+    }
+
+    const navigate = useNavigate();
+
+    const submitNewRecipe = async (e) => {
+        // clean empty values des instructions et ingredients
+
+        e.preventDefault();
+
+
+        try {
+            const result = await axios.post(`${apiUrl}/recette/newRecipe`, recette);
+
+            navigate(`/ViewRecipe/${result.data}`);
+        }catch(error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
@@ -151,29 +153,29 @@ function AddRecipePage() {
                     )}
                 </div>
                 <div>
-                <label htmlFor="tempsPrep">Temps de préparation</label>
-                    <input type="text" id="tempsPrep" name="tempsPrep"
+                <label htmlFor="tempsPrep">Temps de préparation (en minutes)</label>
+                    <input type="number" id="tempsPrep" name="tempsPrep"
                            onChange={(e) => recipeValues(e)}/>
                 </div>
                 <div>
-                    <label htmlFor="tempsCuisson">Temps de cuisson</label>
-                    <input type="text" id="tempsCuisson" name="tempsCuisson"
+                    <label htmlFor="tempsCuisson">Temps de cuisson (en minutes)</label>
+                    <input type="number" id="tempsCuisson" name="tempsCuisson"
                            onChange={(e) => recipeValues(e)}/>
                 </div>
                 <div>
                     <label htmlFor="nbrPortion">Nombre de portion</label>
-                    <input type="text" id="nbrPortion" name="nbrPortion"
+                    <input type="number" id="nbrPortion" name="nbrPortion"
                            onChange={(e) => recipeValues(e)}/>
                 </div>
 
 
                 <div className='listeIngredients'>
                     {recette.ingredients.map((ingredient, index) => (
-                        <div className='ingredientdiv' id='ingredientdiv'  key={index}>
+                        <div className='ingredientdiv' id='ingredientdiv' key={index}>
                             <div className='fifthofspace'>
                                 <label htmlFor="quantite">Qtt</label>
                                 <input
-                                    type="text"
+                                    type="number"
                                     id="ingredientQtt"
                                     name="quantite"
                                     value={ingredient.quantite}
@@ -238,7 +240,7 @@ function AddRecipePage() {
                                     <label htmlFor={tag.id}>
                                         <input type="checkbox"
                                                value={tag.id}
-
+                                               onChange={(e) => tagsValue(e)}
                                         />
                                         {tag.tagNom}
                                     </label>

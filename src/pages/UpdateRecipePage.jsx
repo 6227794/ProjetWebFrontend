@@ -26,10 +26,7 @@ function UpdateRecipePage() {
         categorie: {
             id: "",
             categorieNom: ""},
-        selectedTags: [{
-            id : "",
-            tagNom : ""
-        }],
+        selectedTags: [],
         ingredients: [{
             quantite : "",
             uniteNom : "",
@@ -117,18 +114,25 @@ function UpdateRecipePage() {
     };
 
     const categoryValue = (e) => {
-        const selectedIndex = e.target.selectedIndex;
-        const selectedOption = e.target.options[selectedIndex];
-        const selectedId = parseInt(e.target.value, 10);
-        const selectedName = selectedOption.text;
+        const selectedId = e.target.value;
 
         setRecette({
             ...recette,
             categorie: {
-                id: selectedId,
-                categorieNom: selectedName
+                id: selectedId
             }
         });
+    }
+
+    const tagsValue = (e) => {
+        const updateSelectedTags = [...recette.selectedTags];
+        if(e.target.checked){
+            updateSelectedTags.push({ id: e.target.value})
+        } else {
+            updateSelectedTags.pop({ id: e.target.value})
+        }
+
+        setRecette({...recette, selectedTags: updateSelectedTags});
     }
 
     useEffect(() => {
@@ -167,35 +171,34 @@ function UpdateRecipePage() {
                     )}
                 </div>
                 <div>
-                <label htmlFor="tempsPrep">Temps de préparation</label>
-                    <input type="text" id="tempsPrep" name="tempsPrep"
+                <label htmlFor="tempsPrep">Temps de préparation (en minutes)</label>
+                    <input type="number" id="tempsPrep" name="tempsPrep"
                            onChange={(e) => recipeValues(e)}
                            value={recette.tempsPrep || ""}
                     />
                 </div>
                 <div>
-                    <label htmlFor="tempsCuisson">Temps de cuisson</label>
-                    <input type="text" id="tempsCuisson" name="tempsCuisson"
+                    <label htmlFor="tempsCuisson">Temps de cuisson (en minutes)</label>
+                    <input type="number" id="tempsCuisson" name="tempsCuisson"
                            onChange={(e) => recipeValues(e)}
                            value={recette.tempsCuisson || ""}
                     />
                 </div>
                 <div>
                     <label htmlFor="nbrPortion">Nombre de portion</label>
-                    <input type="text" id="nbrPortion" name="nbrPortion"
+                    <input type="number" id="nbrPortion" name="nbrPortion"
                            onChange={(e) => recipeValues(e)}
                            value={recette.nbrPortion || ""}
                     />
                 </div>
 
-
                 <div className='listeIngredients'>
                     {recette.ingredients.map((ingredient, index) => (
-                        <div className='ingredientdiv' id='ingredientdiv'  key={index}>
+                        <div className='ingredientdiv' id='ingredientdiv' key={index}>
                             <div className='fifthofspace'>
                                 <label htmlFor="quantite">Qtt</label>
                                 <input
-                                    type="text"
+                                    type="number"
                                     id="ingredientQtt"
                                     name="quantite"
                                     value={ingredient.quantite || ""}
@@ -262,7 +265,7 @@ function UpdateRecipePage() {
                                     <label htmlFor={tag.id}>
                                         <input type="checkbox"
                                                value={tag.id}
-
+                                               onChange={(e) => tagsValue(e)}
                                         />
                                         {tag.tagNom}
                                     </label>
@@ -274,7 +277,7 @@ function UpdateRecipePage() {
                     )}
                 </div>
 
-                <button type="submit" className="mainbutton">Publier</button>
+                <button type="submit" className="mainbutton">Enregistrer</button>
             </form>
         </div>
     );
