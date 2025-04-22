@@ -14,14 +14,14 @@ function ViewRecipePage() {
 
     const loadRecipe = async () => {
         const result = await axios.get(`${apiUrl}/recette/getRecipe/${id}`);
-        setRecipe(result.data)
+        setRecipe(result.data);
     }
 
     const handleGeneratePdf = () => {
         axios.get(`${apiUrl}/recette/getRecipePdf/${id}`, {
             responseType: "blob",
         }).then((response) => {
-            const file = new Blob([response.data], { type: "application/pdf" });
+            const file = new Blob([response.data], {type: "application/pdf"});
             const fileURL = URL.createObjectURL(file);
             window.open(fileURL);
         }).catch((error) => {

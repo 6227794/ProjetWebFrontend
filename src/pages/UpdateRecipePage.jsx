@@ -1,9 +1,20 @@
 import {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {apiUrl} from "../../config.js";
 
-function AddRecipePage() {
+function UpdateRecipePage() {
+
+    const {id} = useParams();
+
+    useEffect(() => {
+        loadRecipe();
+    }, []);
+
+    const loadRecipe = async () => {
+        const result = await axios.get(`${apiUrl}/recette/getRecipe/${id}`);
+        setRecette(result.data);
+    }
 
     const [recette, setRecette] = useState({
         nomRecette: "",
@@ -11,17 +22,17 @@ function AddRecipePage() {
         tempsCuisson: "",
         nbrPortion: "",
         imageUrl: "",
-        user: {id: 1},
+        user: {id: ""},
         categorie: {
-            id: 1,
-            categorieNom: "Boissons"},
+            id: "",
+            categorieNom: ""},
         selectedTags: [{
             id : "",
             tagNom : ""
         }],
         ingredients: [{
             quantite : "",
-            uniteNom : "g",
+            uniteNom : "",
             ingredientNom : ""
         }],
         etapes: [{
@@ -43,14 +54,13 @@ function AddRecipePage() {
 
     const navigate = useNavigate();
 
-    const submitNewRecipe = async (e) => {
+    const updateRecipe = async (e) => {
         // clean empty values des instructions et ingredients
 
         e.preventDefault();
 
-        console.log(recette);
         try {
-            const result = await axios.post(`${apiUrl}/recette/newRecipe`, recette);
+            const result = await axios.put(`${apiUrl}/recette/updateRecipe`, recette);
 
             navigate(`/ViewRecipe/${result.data}`);
         }catch(error) {
@@ -130,16 +140,22 @@ function AddRecipePage() {
     return (
         <div className='maindivcontent'>
             <h1>Ajouter une recette</h1>
-            <form onSubmit={(e) => submitNewRecipe(e)} method="post">
+            <form onSubmit={(e) => updateRecipe(e)} method="post">
                 <div>
                     <label htmlFor="nomRecette">Nom de la recette</label>
                     <input type="text" id="nomRecette" name="nomRecette"
-                           placeholder="Nom de la recette" required onChange={(e) => recipeValues(e)}/>
+                           placeholder="Nom de la recette"
+                           required
+                           onChange={(e) => recipeValues(e)}
+                           value={recette.nomRecette || ""}
+                    />
                 </div>
                 <div>
                     <label htmlFor="categorie">Catégorie</label>
                     {tabCategories && tabCategories.length > 0 ? (
-                        <select name="categorie" id="categorie" onChange={(e) => categoryValue(e)}>
+                        <select name="categorie" id="categorie"
+                                onChange={(e) => categoryValue(e)}
+                                value={recette.categorie?.id || ""}>
                             {tabCategories.map((categorie) => (
                                 <option key={categorie.id} value={categorie.id}>
                                     {categorie.categorieNom}
@@ -153,17 +169,23 @@ function AddRecipePage() {
                 <div>
                 <label htmlFor="tempsPrep">Temps de préparation</label>
                     <input type="text" id="tempsPrep" name="tempsPrep"
-                           onChange={(e) => recipeValues(e)}/>
+                           onChange={(e) => recipeValues(e)}
+                           value={recette.tempsPrep || ""}
+                    />
                 </div>
                 <div>
                     <label htmlFor="tempsCuisson">Temps de cuisson</label>
                     <input type="text" id="tempsCuisson" name="tempsCuisson"
-                           onChange={(e) => recipeValues(e)}/>
+                           onChange={(e) => recipeValues(e)}
+                           value={recette.tempsCuisson || ""}
+                    />
                 </div>
                 <div>
                     <label htmlFor="nbrPortion">Nombre de portion</label>
                     <input type="text" id="nbrPortion" name="nbrPortion"
-                           onChange={(e) => recipeValues(e)}/>
+                           onChange={(e) => recipeValues(e)}
+                           value={recette.nbrPortion || ""}
+                    />
                 </div>
 
 
@@ -176,7 +198,7 @@ function AddRecipePage() {
                                     type="text"
                                     id="ingredientQtt"
                                     name="quantite"
-                                    value={ingredient.quantite}
+                                    value={ingredient.quantite || ""}
                                     onChange={(e) => ingredientsValues(index, e)}
                                 />
                             </div>
@@ -185,7 +207,9 @@ function AddRecipePage() {
                                 {tabUnites && tabUnites.length > 0 ? (
                                     <select name="uniteNom"
                                             id="uniteNom"
-                                            onChange={(e) => ingredientsValues(index, e)}>
+                                            onChange={(e) => ingredientsValues(index, e)}
+                                            value={recette.ingredients[index]?.uniteNom || ""}
+                                    >
                                         {tabUnites.map((unite) => (
                                             <option key={unite.id} value={unite.uniteNom}>
                                                 {unite.uniteNom}
@@ -202,7 +226,7 @@ function AddRecipePage() {
                                     type="text"
                                     id="ingredientNom"
                                     name="ingredientNom"
-                                    value={ingredient.ingredientNom}
+                                    value={ingredient.ingredientNom || ""}
                                     onChange={(e) => ingredientsValues(index, e)}
                                 />
                             </div>
@@ -256,4 +280,4 @@ function AddRecipePage() {
     );
 }
 
-export default AddRecipePage;
+export default UpdateRecipePage;

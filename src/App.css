@@ -258,19 +258,33 @@ nav {
   gap: 1rem;
 }
 
+.myrecipedisplay{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
 
-/* - - - - - - M A I N  R E C I P E  C A R D - - - - - - */
+/* - - - - - - R E C I P E  C A R D - - - - - - */
 
-.recipecard {
+.recipecard, .myrecipecard {
   background-color: var(--greige);
-  padding: 1rem;
   border-radius: var(--mainborder);
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   height: 100%;
   transition-timing-function: ease-in-out;
   transition: 0.5s;
+}
+
+.recipecard {
+  padding: 1rem;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.myrecipecard{
+  padding: 0.8rem;
+  flex-direction: row;
 }
 
 .recipecard:hover{
@@ -287,6 +301,13 @@ nav {
   max-width: 100%;
   height: auto;
   margin-bottom: 1rem;
+}
+
+.myrecipecard img {
+  max-width: 30%;
+  height: auto;
+  object-fit: cover;
+  margin-right: 1rem;
 }
 
 .tagsdisplay {
@@ -343,6 +364,40 @@ nav {
   height: 100%;
 }
 
+.myrecipecardactions{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.recipeactions{
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+}
+
+.myrecipecardactions a, .deletemyrecipelink{
+    background-color: var(--light_green);
+    padding: 0.3rem 0.6rem;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    overflow: clip;
+    color: var(--beige);
+    border: none;
+    border-radius: var(--innerborder);
+    max-width: 6.5rem;
+    font-size: 0.8rem;
+    transition: 0.5s;
+}
+
+.updatemyrecipelink{
+  background-color: var(--forest_green) !important;
+}
+
+.deletemyrecipelink{
+  background-color: var(--warning) !important;
+}
 
 /* - - - - - - F O R M - - - - - - */
 
