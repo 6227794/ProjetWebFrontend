@@ -5,6 +5,7 @@ import {apiUrl} from "../../config.js";
 import error from "eslint-plugin-react/lib/util/error.js";
 
 function InscriptionPage() {
+
     const [inscriptionData, setInscriptionData] = useState({
         utilisateur : {
             nom: "",
@@ -44,8 +45,9 @@ function InscriptionPage() {
 
     const submitInscription = async (e) => {
         e.preventDefault();
+        console.log(inscriptionData);
         try {
-            const result = await axios.post(`${apiUrl}/inscription`, inscriptionData);
+            const result = await axios.post(`${apiUrl}/data/inscription`, inscriptionData);
             console.log("Utilisateur inscrit, son id est ", result.data);
             navigate("/Connexion")
         }catch (error) {
@@ -76,8 +78,8 @@ function InscriptionPage() {
                     <input type="email" id="courriel" name="courriel" onChange={handleChange}/>
                 </div>
                 <div>
-                    <label htmlFor="pass">Mot de passe</label>
-                    <input type="password" id="pass" name="password" minLength="8" required onChange={handleChange}/>
+                    <label htmlFor="motDePasse">Mot de passe</label>
+                    <input type="password" id="pass" name="motDePasse" minLength="8" required onChange={handleChange}/>
                 </div>
                 {/* Ajouter mdp plus tard */}
                 <button type="submit" className="mainbutton">S'inscrire</button>
