@@ -7,15 +7,6 @@ function UpdateRecipePage() {
 
     const {id} = useParams();
 
-    useEffect(() => {
-        loadRecipe();
-    }, []);
-
-    const loadRecipe = async () => {
-        const result = await axios.get(`${apiUrl}/recette/getRecipe/${id}`);
-        setRecette(result.data);
-    }
-
     const [recette, setRecette] = useState({
         nomRecette: "",
         tempsPrep: "",
@@ -26,6 +17,7 @@ function UpdateRecipePage() {
         categorie: {
             id: "",
             categorieNom: ""},
+        tags:[],
         selectedTags: [],
         ingredients: [{
             quantite : "",
@@ -38,6 +30,24 @@ function UpdateRecipePage() {
         }]
     })
 
+    useEffect(() => {
+        populateUnits();
+        populateCategories();
+        populateTags();
+        loadRecipe();
+    }, []);
+
+    const loadRecipe = async () => {
+        const result = await axios.get(`${apiUrl}/recette/getRecipe/${id}`);
+        setRecette(result.data);
+    }
+
+    function loadSelectedTags(){
+        /*for (let t in recette.tags){
+            console.log(recette.tags[t].tag)
+        }*/
+    }
+
     const [tabUnites, setUnites] = useState([]);
 
     const [tabCategories, setCategories] = useState([]);
@@ -46,7 +56,6 @@ function UpdateRecipePage() {
 
     const recipeValues = (e) => {
         setRecette({...recette, [e.target.name]: e.target.value})
-        console.log(recette);
     }
 
     const navigate = useNavigate();
@@ -56,13 +65,15 @@ function UpdateRecipePage() {
 
         e.preventDefault();
 
-        try {
+        console.log(recette)
+
+        /*try {
             const result = await axios.put(`${apiUrl}/recette/updateRecipe`, recette);
 
             navigate(`/ViewRecipe/${result.data}`);
         }catch(error) {
                 console.log(error);
-        }
+        }*/
     }
 
     const populateUnits = async () => {
@@ -126,20 +137,16 @@ function UpdateRecipePage() {
 
     const tagsValue = (e) => {
         const updateSelectedTags = [...recette.selectedTags];
+
         if(e.target.checked){
             updateSelectedTags.push({ id: e.target.value})
         } else {
-            updateSelectedTags.pop({ id: e.target.value})
+            const pos = updateSelectedTags.map(e => e.id).indexOf(e.target.value);
+            updateSelectedTags.splice(pos,1)
         }
 
         setRecette({...recette, selectedTags: updateSelectedTags});
     }
-
-    useEffect(() => {
-        populateUnits();
-        populateCategories();
-        populateTags();
-    }, []);
 
     return (
         <div className='maindivcontent'>

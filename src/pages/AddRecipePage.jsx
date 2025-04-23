@@ -97,30 +97,52 @@ function AddRecipePage() {
 
     const tagsValue = (e) => {
         const updateSelectedTags = [...recette.selectedTags];
+
         if(e.target.checked){
             updateSelectedTags.push({ id: e.target.value})
         } else {
-            updateSelectedTags.pop({ id: e.target.value})
+            const pos = updateSelectedTags.map(e => e.id).indexOf(e.target.value);
+            updateSelectedTags.splice(pos,1)
         }
 
         setRecette({...recette, selectedTags: updateSelectedTags});
     }
 
+    function cleanValues(){
+
+    }
+
+    const deleteIngredient = (index) =>{
+        const updateIngredients = [...recette.ingredients]
+        updateIngredients.splice(index, 1);
+        setRecette({...recette, ingredients: updateIngredients})
+    }
+
+    const deleteEtape = (index) =>{
+        const updateEtapes = [...recette.etapes]
+
+        // ne fonctionne pas, erreur controlled / uncontrolled
+        //updateEtapes.splice(index, 1);
+        setRecette({...recette, ingredients: updateEtapes})
+    }
+
+
     const navigate = useNavigate();
 
     const submitNewRecipe = async (e) => {
-        // clean empty values des instructions et ingredients
-
         e.preventDefault();
 
+        cleanValues();
 
-        try {
+        console.log(recette)
+
+        /* {
             const result = await axios.post(`${apiUrl}/recette/newRecipe`, recette);
 
             navigate(`/ViewRecipe/${result.data}`);
         }catch(error) {
             console.log(error);
-        }
+        }*/
     }
 
     useEffect(() => {
@@ -208,6 +230,9 @@ function AddRecipePage() {
                                     onChange={(e) => ingredientsValues(index, e)}
                                 />
                             </div>
+                            <div>
+                                <a onClick={(e) => deleteIngredient(index, e)}>del</a>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -226,6 +251,9 @@ function AddRecipePage() {
                                     value={instruction.description}
                                     onChange={(e) => instructionValues(index, e)}
                                 />
+                            </div>
+                            <div>
+                                <a onClick={(e) => deleteEtape(index, e)}>del</a>
                             </div>
                         </div>
                     ))}
