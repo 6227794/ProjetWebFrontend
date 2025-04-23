@@ -1,6 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import {apiUrl} from "../../config.js";
 
 function ConnexionPage() {
+    {/*
+    const [user, setUser] = useState({courriel : "", motDePasse : ""});
+    const [error, setError] = useState(false);
+    const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        setUser({...user, [e.target.name] : e.target.value});
+    }
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        }
+    }*/}
     return (
         <div className='maindivcontent'>
             <h1>Connexion</h1>
@@ -14,7 +30,6 @@ function ConnexionPage() {
                     <input type="password" id="pass" name="motDePasse" minLength="8" required />
                 </div>
 
-                {/* Ajouter mdp plus tard */}
                 <button type="submit" className="mainbutton">Se connecter</button>
             </form>
 
