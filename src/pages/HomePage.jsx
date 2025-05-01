@@ -58,12 +58,13 @@ function HomePage() {
                                             <p>Temps de cuisson : {data.tempsCuisson}</p>
                                         </div>
                                         <div className='tagsdisplay'>
-                                            {data.tags.map((tagRecette, index) => (
+                                            {Array.isArray(data.tags) && data.tags.map((tagRecette, index) => (
                                                 <p className='recipetag' key={index}>
                                                     {tagRecette.tag ? tagRecette.tag.tagNom : ""}
                                                 </p>
                                             ))}
                                         </div>
+
                                     </div>
                                 </Link>
                             ))
