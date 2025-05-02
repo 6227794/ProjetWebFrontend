@@ -101,6 +101,7 @@ nav {
   /* text-decoration: underline; */
   position: relative;
   top: -0.2rem;
+  cursor: pointer;
 }
 
 /* Dropdown Button */
@@ -132,10 +133,12 @@ nav {
 
 .dropdown-content a:hover {
   background-color: #ddd;
+  cursor: pointer;
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
+  cursor: pointer;
 }
 
 /* .dropdown:hover {background-color: #3e8e41;} */
@@ -166,6 +169,7 @@ nav {
   background-color: var(--lime_green);
   color: var(--forest_green);
   box-shadow: 0.2rem 0.2rem var(--forest_green);
+  cursor: pointer;
 }
 
 /* - - - - - - H O M E  P A G E  :  S E C T I O N - - - - - - */
@@ -200,8 +204,8 @@ nav {
 .homeintro {
   float: left;
   position: absolute;
-  left: 0px;
-  top: 0px;
+  left: 0;
+  top: 0;
   padding: 8rem 50% 0 5rem;
   z-index: 3;
 }
@@ -237,6 +241,7 @@ nav {
   background-color: var(--forest_green);
   color: var(--lime_green);
   box-shadow: 0.2rem 0.2rem var(--lime_green);
+  cursor: pointer;
 }
 
 
@@ -291,6 +296,7 @@ nav {
   box-shadow: 0.2rem 0.2rem 0.2rem #888888;
   position: relative;
   top: -0.2rem;
+  cursor: pointer;
 }
 
 .recipecard h2 {
@@ -454,6 +460,7 @@ input, select {
   background-color: var(--forest_green);
   color: var(--beige);
   box-shadow: 0.2rem 0.2rem var(--light_green);
+  cursor: pointer;
 }
 
 .taglabel{
@@ -483,11 +490,35 @@ input, select {
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  margin-bottom: 0 !important;
 }
 
 .numEtape{
   line-height: 1rem;
   padding-top: 2rem;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--forest_green);
+}
+
+.deletediv{
+  justify-content: end;
+  width: fit-content;
+  padding: 0 1rem;
+}
+
+.deletebutton{
+  color: var(--lighter_green);
+}
+
+.deletebutton svg{
+  height: 2.5rem;
+}
+
+.deletebutton:hover{
+  color: var(--warning);
+  cursor: pointer;
 }
 /* - - - - - - F O O T E R - - - - - - */
 
@@ -569,6 +600,7 @@ footer a {
   background-color: var(--lime_green);
   color: var(--forest_green);
   box-shadow: 0.2rem 0.2rem var(--forest_green);
+  cursor: pointer;
 }
 
 .tagsrecipedisplay {

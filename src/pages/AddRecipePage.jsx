@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {apiUrl} from "../../config.js";
+import { FaX } from "react-icons/fa6";
 
 function AddRecipePage() {
 
@@ -108,10 +109,6 @@ function AddRecipePage() {
         setRecette({...recette, selectedTags: updateSelectedTags});
     }
 
-    function cleanValues(){
-
-    }
-
     const deleteIngredient = (index) =>{
         const updateIngredients = [...recette.ingredients]
         updateIngredients.splice(index, 1);
@@ -120,10 +117,8 @@ function AddRecipePage() {
 
     const deleteEtape = (index) =>{
         const updateEtapes = [...recette.etapes]
-
-        // ne fonctionne pas, erreur controlled / uncontrolled
-        //updateEtapes.splice(index, 1);
-        setRecette({...recette, ingredients: updateEtapes})
+        updateEtapes.splice(index, 1);
+        setRecette({...recette, etapes: updateEtapes})
     }
 
 
@@ -132,17 +127,14 @@ function AddRecipePage() {
     const submitNewRecipe = async (e) => {
         e.preventDefault();
 
-        cleanValues();
-
         console.log(recette)
 
-        /* {
-            const result = await axios.post(`${apiUrl}/recette/newRecipe`, recette);
+        try {const result = await axios.post(`${apiUrl}/recette/newRecipe`, recette);
 
             navigate(`/ViewRecipe/${result.data}`);
         }catch(error) {
             console.log(error);
-        }*/
+        }
     }
 
     useEffect(() => {
@@ -156,14 +148,14 @@ function AddRecipePage() {
             <h1>Ajouter une recette</h1>
             <form onSubmit={(e) => submitNewRecipe(e)} method="post">
                 <div>
-                    <label htmlFor="nomRecette">Nom de la recette</label>
+                    <label htmlFor="nomRecette">Nom de la recette*</label>
                     <input type="text" id="nomRecette" name="nomRecette"
                            placeholder="Nom de la recette" required onChange={(e) => recipeValues(e)}/>
                 </div>
                 <div>
-                    <label htmlFor="categorie">Catégorie</label>
+                    <label htmlFor="categorie">Catégorie*</label>
                     {tabCategories && tabCategories.length > 0 ? (
-                        <select name="categorie" id="categorie" onChange={(e) => categoryValue(e)}>
+                        <select name="categorie" id="categorie" required onChange={(e) => categoryValue(e)}>
                             {tabCategories.map((categorie) => (
                                 <option key={categorie.id} value={categorie.id}>
                                     {categorie.categorieNom}
@@ -175,8 +167,8 @@ function AddRecipePage() {
                     )}
                 </div>
                 <div>
-                <label htmlFor="tempsPrep">Temps de préparation (en minutes)</label>
-                    <input type="number" id="tempsPrep" name="tempsPrep"
+                <label htmlFor="tempsPrep">Temps de préparation (en minutes)*</label>
+                    <input type="number" id="tempsPrep" name="tempsPrep" required
                            onChange={(e) => recipeValues(e)}/>
                 </div>
                 <div>
@@ -185,8 +177,8 @@ function AddRecipePage() {
                            onChange={(e) => recipeValues(e)}/>
                 </div>
                 <div>
-                    <label htmlFor="nbrPortion">Nombre de portion</label>
-                    <input type="number" id="nbrPortion" name="nbrPortion"
+                    <label htmlFor="nbrPortion">Nombre de portion*</label>
+                    <input type="number" id="nbrPortion" name="nbrPortion" required
                            onChange={(e) => recipeValues(e)}/>
                 </div>
 
@@ -195,7 +187,7 @@ function AddRecipePage() {
                     {recette.ingredients.map((ingredient, index) => (
                         <div className='ingredientdiv' id='ingredientdiv' key={index}>
                             <div className='fifthofspace'>
-                                <label htmlFor="quantite">Qtt</label>
+                                <label htmlFor="quantite">Quantité</label>
                                 <input
                                     type="number"
                                     id="ingredientQtt"
@@ -221,17 +213,18 @@ function AddRecipePage() {
                                 )}
                             </div>
                             <div>
-                                <label htmlFor="ingredientNom">Nom de l'ingrédient</label>
+                                <label htmlFor="ingredientNom">Nom de l'ingrédient*</label>
                                 <input
                                     type="text"
                                     id="ingredientNom"
                                     name="ingredientNom"
                                     value={ingredient.ingredientNom}
+                                    required
                                     onChange={(e) => ingredientsValues(index, e)}
                                 />
                             </div>
-                            <div>
-                                <a onClick={(e) => deleteIngredient(index, e)}>del</a>
+                            <div className='deletediv'>
+                                <a onClick={(e) => deleteIngredient(index, e)} className='deletebutton'><FaX /></a>
                             </div>
                         </div>
                     ))}
@@ -243,17 +236,18 @@ function AddRecipePage() {
                         <div id='etapeDiv' key={index}>
                             <p className='numEtape'>{index + 1}.</p>
                             <div className='etapeDesc'>
-                                <label htmlFor={`description-${index}`}>Instruction</label>
+                                <label htmlFor={`description-${index}`}>Instruction*</label>
                                 <input
                                     type="text"
                                     id={`description-${index}`}
                                     name="description"
                                     value={instruction.description}
+                                    required
                                     onChange={(e) => instructionValues(index, e)}
                                 />
                             </div>
-                            <div>
-                                <a onClick={(e) => deleteEtape(index, e)}>del</a>
+                            <div className='deletediv'>
+                                <a onClick={(e) => deleteEtape(index, e)} className='deletebutton'><FaX /></a>
                             </div>
                         </div>
                     ))}
