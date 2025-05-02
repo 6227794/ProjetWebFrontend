@@ -23,7 +23,7 @@ function App() {
         <Header/>
         <Routes>
           <Route path="/" element={<HomePage/>}/>
-          <Route path="/Connexion" element={<ConnexionPage/>}/>
+          {/*<Route path="/Connexion" element={<ConnexionPage/>}/>*/}
           <Route path="/Inscription" element={<InscriptionPage/>}/>
           <Route path="/AddRecipe" element={<AddRecipePage/>}/>
           <Route path="/Conversion" element={<ConversionPage/>}/>

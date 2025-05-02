@@ -20,10 +20,10 @@ function ConnexionPage() {
             });
 
             if (reponse.data.success()){
-                localStorage.setItem('user', JSON.stringify({
+                {/*localStorage.setItem('user', JSON.stringify({
                     id: reponse.data.id,
                     nomAffichage: reponse.data.nomAffichage
-                }));
+                }));*/}
                 navigate('/Homepage')
             }else{
                 setError(reponse.data.message)
