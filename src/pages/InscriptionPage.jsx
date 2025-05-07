@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import axios from 'axios';
-import {apiUrl} from "../../config.js";
-import error from "eslint-plugin-react/lib/util/error.js";
+
+
 
 
 function InscriptionPage() {
@@ -16,7 +16,6 @@ function InscriptionPage() {
     });
 
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -28,24 +27,42 @@ function InscriptionPage() {
 
     async function handleSubmit(e){
         e.preventDefault();
-        setLoading(true);
         setError('');
 
         try{
+            const info = {
+                nom : userData.nom,
+                prenom : userData.prenom,
+                nomAffichage : userData.nomAffichage,
+                courriel : userData.courriel,
+                motDePasse : userData.motDePasse
+            }
+
             const response = await axios.post(
                 'http://localhost:7246/api/authentification/inscription',
-                userData
+                info,
+                //Comme dans Postman
+                {
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    }
+                }
             );
-            if (response.data.success()){
-                alert('Inscription réussi yippi, connectez vous');
+
+            if (response.data.succes){
                 navigate('/Connexion')
+                localStorage.setItem('user', JSON.stringify({
+                    nomAffichage : userData.nomAffichage,
+                    courriel : userData.courriel
+                    }
+                ));
+                console.log('Inscription réussi yippi');
             }else {
-                setError(response.data.message)
+                setError(response.data.message || "Erreur")
             }
-        }catch (err){
-            setError('Échec dinscription');
-        }finally {
-            setLoading(false)
+        }catch (err) {
+            console.error(err)
+            setError('Échec d\'inscription');
         }
     }
 
@@ -76,7 +93,7 @@ function InscriptionPage() {
                     <label htmlFor="motDePasse">Mot de passe</label>
                     <input type="password" id="pass" name="motDePasse" minLength="8" required value={userData.motDePasse} onChange={handleChange}/>
                 </div>
-                <button type="submit" className="mainbutton">Sinscrire</button>
+                <button type="submit" className="mainbutton" >Sinscrire</button>
             </form>
         </div>
     );
