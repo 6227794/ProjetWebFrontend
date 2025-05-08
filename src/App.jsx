@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import AddRecipePage from './pages/AddRecipePage';
@@ -14,16 +14,27 @@ import ConnexionPage from './pages/ConnexionPage';
 import InscriptionPage from './pages/InscriptionPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import RouteAccessible from "./components/Accessibilite";
+import {useEffect, useState} from "react";
 
 function App() {
+  const [trigger, setTrigger] = useState(false);
+  const isConnected = localStorage.getItem('isConnected') === ('true');
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setTrigger(prev => !prev);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
   return (
       <BrowserRouter>
         <div>
           <Header/>
           <Routes>
             <Route path="/" element={<HomePage/>}/>
-            <Route path="/Connexion" element={<ConnexionPage/>}/>
+            <Route path="/Connexion" element={isConnected ? <Navigate to="/Profil"/> : <ConnexionPage/>}/>
             <Route path="/Inscription" element={<InscriptionPage/>}/>
             <Route path="/Conversion" element={<ConversionPage/>}/>
             <Route path="/RecipeList" element={<RecipeListPage/>}/>
@@ -31,12 +42,10 @@ function App() {
             <Route path="/About" element={<AboutPage/>}/>
             <Route path="/FAQ" element={<FAQPage/>}/>
 
-            {/* Routes protégées */}
-            <Route element={<RouteAccessible/>}>
-              <Route path="/AddRecipe" element={<AddRecipePage/>}/>
-              <Route path="/Profil" element={<ProfilPage/>}/>
-              <Route path="/FavoriteRecipe" element={<FavoritePage/>}/>
-            </Route>
+            <Route path="/AddRecipe" element={isConnected ? <AddRecipePage/> : <Navigate to="/Connexion"/>}/>
+            <Route path="/Profil" element={isConnected ? <ProfilPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
+            <Route path="/FavoriteRecipe" element={isConnected ? <FavoritePage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
+
 
             <Route path="*" element={<ErrorPage/>}/>
           </Routes>

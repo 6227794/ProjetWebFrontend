@@ -37,11 +37,12 @@ function ConnexionPage() {
                 );
 
             if (reponse.data.succes){
-                localStorage.setItem('user', JSON.stringify({
-                    nomAffichage: reponse.data.nomAffichage,
-                    courriel : reponse.data.courriel
-                }));
-                navigate('/')
+                console.log('TU ES CONNECTEEEEEER')
+                localStorage.setItem('isConnected', 'true');
+                localStorage.setItem('courriel', userData.courriel);
+                window.dispatchEvent(new Event('storage'));
+                navigate('/');
+
             }else{
                 alert('Identifiant incorrecte')
                 setError(reponse.data.message)
