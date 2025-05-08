@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 function ProfilePage({setTrigger}) {
+    const {id} = useParams();
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -10,6 +11,15 @@ function ProfilePage({setTrigger}) {
         setTrigger(prev => !prev);
         navigate('/Connexion');
     }
+
+    const [userData, setUserData] = useState({
+        id : "",
+        courriel : "",
+        nom : "",
+        prenom : "",
+        nomAffichage : ""
+    })
+    
 
     return (
         <div className='maindivcontent'>
@@ -27,12 +37,6 @@ function ProfilePage({setTrigger}) {
                     <label for="nomAffichage">Nom d'affichage</label>
                     <input type="text" id="nomAffichage" name="nomAffichage"/>
                 </div>
-                {/* Validation si changement courriel */}
-                <div className='lastformdiv'>
-                    <label for="courriel">Courriel</label>
-                    <input type="email" id="courriel" name="courriel"/>
-                </div>
-                {/* Ajouter mdp plus tard */}
                 <button type="submit" className="mainbutton">Sauvegarder</button>
                 <br/>
                 <button type="submit" className="mainbutton" onClick={handleLogout}>Se déconnecter</button>
