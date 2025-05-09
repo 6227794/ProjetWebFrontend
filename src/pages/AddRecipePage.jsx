@@ -19,6 +19,7 @@ function AddRecipePage() {
         ingredients: [{
             quantite : "",
             uniteNom : "g",
+
             ingredientNom : ""
         }],
         etapes: [{
@@ -181,8 +182,6 @@ function AddRecipePage() {
                     <input type="number" id="nbrPortion" name="nbrPortion" required
                            onChange={(e) => recipeValues(e)}/>
                 </div>
-
-
                 <div className='listeIngredients'>
                     {recette.ingredients.map((ingredient, index) => (
                         <div className='ingredientdiv' id='ingredientdiv' key={index}>

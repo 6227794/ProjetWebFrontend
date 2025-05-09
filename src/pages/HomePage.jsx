@@ -36,39 +36,41 @@ function HomePage() {
                 <img className='homebg' src={homebg} alt="Vegetable and quinoa bowl" />
                 <div className='homebgeffect' />
                 <div className='homeintro'>
-                  <h1 className='comicallylargetitle'>C'est l'été{'\u00A0'}!</h1>
-                <h1>Enfin presque...</h1>
-                <p>Dégustez l'été avec cette belle salade de couscous aux légumes frais, idéale pour vos repas ensoleillés !</p>
-                <a className='homebutton' href={`/ViewRecipe/6`}>Cuisinez cette recette</a>
+                    <h1 className='comicallylargetitle'>C'est l'été{'\u00A0'}!</h1>
+                    <h1>Enfin presque...</h1>
+                    <p>Dégustez l'été avec cette belle salade de couscous aux légumes frais, idéale pour vos repas ensoleillés !</p>
+                    <a className='homebutton' href={`/ViewRecipe/6`}>Cuisinez cette recette</a>
                 </div>
             </div>
             <div className='homepagearticle'>
                 <h1>Recettes à la une</h1>
-                    <div className='recipedisplay'>
-                        {
-                            tabRecipes.map((data) => (
-                                <Link to={`/ViewRecipe/${data.id}`} key={data.id}
-                                      className='linkrecipecard'>
-                                    <div className='recipecard'>
-                                        <div>
-                                            <img src={TempImg} alt="Hazelnut brownies"/>
-                                            <h2>{data.nomRecette}</h2>
-                                            <p>Nombre de portion : {data.nbrPortion}</p>
-                                            <p>Temps de préparation : {data.tempsPrep}</p>
-                                            <p>Temps de cuisson : {data.tempsCuisson}</p>
-                                        </div>
-                                        <div className='tagsdisplay'>
-                                            {data.tags.map((tagRecette, index) => (
-                                                <p className='recipetag' key={index}>
-                                                    {tagRecette.tag ? tagRecette.tag.tagNom : ""}
-                                                </p>
-                                            ))}
-                                        </div>
+
+                <div className='recipedisplay'>
+                    {
+                        tabRecipes.map((data) => (
+                            <Link to={`/ViewRecipe/${data.id}`} key={data.id}
+                                  className='linkrecipecard'>
+                                <div className='recipecard'>
+                                    <div>
+                                        <img src={TempImg} alt="Hazelnut brownies"/>
+                                        <h2>{data.nomRecette}</h2>
+                                        <p>Nombre de portion : {data.nbrPortion}</p>
+                                        <p>Temps de préparation : {data.tempsPrep}</p>
+                                        <p>Temps de cuisson : {data.tempsCuisson}</p>
                                     </div>
-                                </Link>
-                            ))
-                        }
-                    </div>
+                                    <div className='tagsdisplay'>
+                                        {data.tags.map((tagRecette, index) => (
+                                            <p className='recipetag' key={index}>
+                                                {tagRecette.tag ? tagRecette.tag.tagNom : ""}
+                                            </p>
+                                        ))}
+                                    </div>
+                                </div>
+                            </Link>
+                        ))
+                    }
+                </div>
+
             </div>
         </div>
 

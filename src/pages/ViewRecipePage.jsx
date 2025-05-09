@@ -4,6 +4,7 @@ import {useParams} from 'react-router-dom';
 import {apiUrl} from "../../config.js";
 import errorbg from '../assets/empty-plate.jpg'
 
+
 function ViewRecipePage() {
 
     const {id} = useParams();
@@ -16,6 +17,7 @@ function ViewRecipePage() {
 
     const loadRecipe = async () => {
         const result = await axios.get(`${apiUrl}/recette/getRecipe/${id}`);
+
         setRecipe(result.data);
         try {
             setImageUrl(`${apiUrl}/images/${id}`);
@@ -28,7 +30,9 @@ function ViewRecipePage() {
         axios.get(`${apiUrl}/recette/getRecipePdf/${id}`, {
             responseType: "blob",
         }).then((response) => {
+
             const file = new Blob([response.data], {type: "application/pdf"});
+
             const fileURL = URL.createObjectURL(file);
             window.open(fileURL);
         }).catch((error) => {

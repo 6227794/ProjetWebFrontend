@@ -1,20 +1,70 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 function ConnexionPage() {
+    const [userData, setUserData] = useState({
+        courriel : '',
+        motDePasse : ''
+    });
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    const handleChage = (e) => {
+        setUserData({
+            ...userData,
+            [e.target.name]: e.target.value
+        });
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+
+        try {
+            const reponse = await axios.post(
+                'http://localhost:7246/api/authentification/connexion',
+                {
+                    courriel: userData.courriel,
+                    motDePasse: userData.motDePasse
+                },
+                {
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    }
+                }
+                );
+
+            if (reponse.data.succes){
+                console.log('TU ES CONNECTEEEEEER')
+                localStorage.setItem('isConnected', 'true');
+                localStorage.setItem('courriel', userData.courriel);
+                window.dispatchEvent(new Event('storage'));
+                navigate('/');
+
+            }else{
+                alert('Identifiant incorrecte')
+                setError(reponse.data.message)
+            }
+        }catch (error) {
+            setError(error.reponse?.data?.message)
+        }
+    }
+
     return (
         <div className='maindivcontent'>
             <h1>Connexion</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div>
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" />
+                    <label htmlFor="courriel">Email</label>
+                    <input type="email" id="courriel" name="courriel" value={userData.courriel} onChange={handleChage}/>
                 </div>
                 <div>
-                    <label for="pass">Mot de passe</label>
-                    <input type="password" id="pass" name="password" minlength="8" required />
+                    <label htmlFor="=motDePasse">Mot de passe</label>
+                    <input type="password" id="motDePasse" name="motDePasse" value={userData.motDePasse} onChange={handleChage} minLength="8" required />
                 </div>
 
-                {/* Ajouter mdp plus tard */}
                 <button type="submit" className="mainbutton">Se connecter</button>
             </form>
 
