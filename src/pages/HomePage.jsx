@@ -44,6 +44,7 @@ function HomePage() {
             </div>
             <div className='homepagearticle'>
                 <h1>Recettes à la une</h1>
+
                 <div className='recipedisplay'>
                     {
                         tabRecipes.map((data) => (
@@ -69,6 +70,7 @@ function HomePage() {
                         ))
                     }
                 </div>
+
             </div>
         </div>
 

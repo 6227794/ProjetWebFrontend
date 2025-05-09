@@ -6,7 +6,7 @@ import AddRecipePage from './pages/AddRecipePage';
 import ConversionPage from './pages/ConversionPage';
 import ErrorPage from './pages/ErrorPage';
 import FAQPage from './pages/FAQPage';
-import FavoritePage from './pages/FavoritePage';
+import MyRecipesPage from './pages/MyRecipesPage.jsx';
 import ProfilPage from './pages/ProfilPage';
 import RecipeListPage from './pages/RecipeListPage';
 import ViewRecipePage from './pages/ViewRecipePage';
@@ -14,7 +14,9 @@ import ConnexionPage from './pages/ConnexionPage';
 import InscriptionPage from './pages/InscriptionPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import UpdateRecipePage from "./pages/UpdateRecipePage.jsx";
 import {useEffect, useState} from "react";
+
 
 function App() {
   const [trigger, setTrigger] = useState(false);
@@ -29,6 +31,7 @@ function App() {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
   return (
+
       <BrowserRouter>
         <div>
           <Header/>
@@ -39,14 +42,13 @@ function App() {
             <Route path="/Conversion" element={<ConversionPage/>}/>
             <Route path="/RecipeList" element={<RecipeListPage/>}/>
             <Route path="/ViewRecipe/:id" element={<ViewRecipePage/>}/>
+            <Route path="/UpdateRecipe/:id" element={<UpdateRecipePage/>}/>
             <Route path="/About" element={<AboutPage/>}/>
             <Route path="/FAQ" element={<FAQPage/>}/>
-
+            <Route path="/MyRecipes" element={<MyRecipesPage/>}/>
             <Route path="/AddRecipe" element={isConnected ? <AddRecipePage/> : <Navigate to="/Connexion"/>}/>
             <Route path="/Profil" element={isConnected ? <ProfilPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
             <Route path="/FavoriteRecipe" element={isConnected ? <FavoritePage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
-
-
             <Route path="*" element={<ErrorPage/>}/>
           </Routes>
           <Footer/>

@@ -24,6 +24,7 @@ function Header() {
                             <Link className="" to={`/FavoriteRecipe`}> Favoris </Link>
                             <Link className="" to={`/Connexion`}> Connexion </Link>
                             <Link className="" to={`/Inscription`}> Inscription </Link>
+
                         </div>
                     </div>
                 </ul>
