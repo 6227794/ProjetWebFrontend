@@ -2,11 +2,13 @@ import axios from 'axios';
 import {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {apiUrl} from "../../config.js";
+import errorbg from '../assets/empty-plate.jpg'
 
 function ViewRecipePage() {
 
     const {id} = useParams();
     const [viewRecipe, setRecipe] = useState({});
+    const [imageUrl, setImageUrl] = useState("");
 
     useEffect(() => {
         loadRecipe();
@@ -14,14 +16,19 @@ function ViewRecipePage() {
 
     const loadRecipe = async () => {
         const result = await axios.get(`${apiUrl}/recette/getRecipe/${id}`);
-        setRecipe(result.data)
+        setRecipe(result.data);
+        try {
+            setImageUrl(`${apiUrl}/images/${id}`);
+        } catch (error) {
+            console.error("Error ", error);
+        }
     }
 
     const handleGeneratePdf = () => {
         axios.get(`${apiUrl}/recette/getRecipePdf/${id}`, {
             responseType: "blob",
         }).then((response) => {
-            const file = new Blob([response.data], { type: "application/pdf" });
+            const file = new Blob([response.data], {type: "application/pdf"});
             const fileURL = URL.createObjectURL(file);
             window.open(fileURL);
         }).catch((error) => {
@@ -33,8 +40,12 @@ function ViewRecipePage() {
         <div className="maindivcontent">
             <div className="recipeimage">
                 <img
-                    src="https://d2zp5xs5cp8zlg.cloudfront.net/image-61785-800.jpg"
-                    alt="kitty"
+                    src={
+                        imageUrl
+                            ? imageUrl
+                            : errorbg
+                    }
+                    alt="Aperçu de la recette"
                     className="imgRecette"
                 />
 

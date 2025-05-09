@@ -1,24 +1,30 @@
 import {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import {apiUrl} from "../../config.js";
-import { FaX } from "react-icons/fa6";
+import {FaX} from "react-icons/fa6";
 
-function AddRecipePage() {
+function UpdateRecipePage() {
+
+    const {id} = useParams();
+
+    //const [image, setImage] = useState(null);
 
     const [recette, setRecette] = useState({
+        id:"",
         nomRecette: "",
         tempsPrep: "",
         tempsCuisson: "",
         nbrPortion: "",
-        imageUrl: "",
-        user: {id: 1},
+        user: {id: ""},
         categorie: {
-            id: 1},
+            id: "",
+            categorieNom: ""},
+        tags:[],
         selectedTags: [],
         ingredients: [{
             quantite : "",
-            uniteNom : "g",
+            uniteNom : "",
             ingredientNom : ""
         }],
         etapes: [{
@@ -27,6 +33,27 @@ function AddRecipePage() {
         }]
     })
 
+    useEffect(() => {
+        populateUnits();
+        populateCategories();
+        populateTags();
+        loadRecipe();
+    }, []);
+
+    useEffect(() => {
+        loadSelectedTags();
+    }, [recette.tags]);
+
+    const loadRecipe = async () => {
+        const result = await axios.get(`${apiUrl}/recette/getRecipe/${id}`);
+        setRecette(result.data);
+    }
+
+    function loadSelectedTags(){
+        const selected = recette.tags.map(tagRecette => ({ id: String(tagRecette.tag.id) }));
+        setRecette({...recette, selectedTags: selected})
+    }
+
     const [tabUnites, setUnites] = useState([]);
 
     const [tabCategories, setCategories] = useState([]);
@@ -34,7 +61,34 @@ function AddRecipePage() {
     const [tabTags, setTags] = useState([])
 
     const recipeValues = (e) => {
-        setRecette({...recette, [e.target.name]: e.target.value});
+        setRecette({...recette, [e.target.name]: e.target.value})
+    }
+
+    const navigate = useNavigate();
+
+    const updateRecipe = async (e) => {
+        e.preventDefault();
+
+        console.log(recette);
+
+        /*
+        const formData = new FormData();
+        formData.append("image",image);
+        formData.append("recetteDTO", JSON.stringify(recette))
+
+        try {
+            const response = await axios.put(`${apiUrl}/recette/updateRecipe`, formData);
+            console.log(response.data);
+        } catch (error) {
+            console.log(error)
+        }*/
+        try {
+            const result = await axios.put(`${apiUrl}/recette/updateRecipe`, recette);
+
+            navigate(`/ViewRecipe/${result.data}`);
+        }catch(error) {
+                console.log(error);
+        }
     }
 
     const populateUnits = async () => {
@@ -101,13 +155,19 @@ function AddRecipePage() {
 
         if(e.target.checked){
             updateSelectedTags.push({ id: e.target.value})
-        } else {
+        } else if (!e.target.checked) {
             const pos = updateSelectedTags.map(e => e.id).indexOf(e.target.value);
             updateSelectedTags.splice(pos,1)
         }
 
         setRecette({...recette, selectedTags: updateSelectedTags});
     }
+
+    /*
+    const handleFileChange = (e) => {
+        //setRecette({...recette, image: e.target.files[0]});
+        //setImage(e.target.files[0]);
+    };*/
 
     const deleteIngredient = (index) =>{
         const updateIngredients = [...recette.ingredients]
@@ -121,41 +181,26 @@ function AddRecipePage() {
         setRecette({...recette, etapes: updateEtapes})
     }
 
-
-    const navigate = useNavigate();
-
-    const submitNewRecipe = async (e) => {
-        e.preventDefault();
-
-        console.log(recette)
-
-        try {const result = await axios.post(`${apiUrl}/recette/newRecipe`, recette);
-
-            navigate(`/ViewRecipe/${result.data}`);
-        }catch(error) {
-            console.log(error);
-        }
-    }
-
-    useEffect(() => {
-        populateUnits();
-        populateCategories();
-        populateTags();
-    }, []);
-
     return (
         <div className='maindivcontent'>
-            <h1>Ajouter une recette</h1>
-            <form onSubmit={(e) => submitNewRecipe(e)} method="post">
+            <h1>Modifier la recette</h1>
+            <form onSubmit={(e) => updateRecipe(e)} method="post">
                 <div>
+                    {/*<input type="file" onChange={handleFileChange}/>*/}
                     <label htmlFor="nomRecette">Nom de la recette*</label>
                     <input type="text" id="nomRecette" name="nomRecette"
-                           placeholder="Nom de la recette" required onChange={(e) => recipeValues(e)}/>
+                           placeholder="Nom de la recette"
+                           required
+                           onChange={(e) => recipeValues(e)}
+                           value={recette.nomRecette || ""}
+                    />
                 </div>
                 <div>
                     <label htmlFor="categorie">Catégorie*</label>
                     {tabCategories && tabCategories.length > 0 ? (
-                        <select name="categorie" id="categorie" required onChange={(e) => categoryValue(e)}>
+                        <select name="categorie" id="categorie" required
+                                onChange={(e) => categoryValue(e)}
+                                value={recette.categorie?.id || ""}>
                             {tabCategories.map((categorie) => (
                                 <option key={categorie.id} value={categorie.id}>
                                     {categorie.categorieNom}
@@ -169,19 +214,24 @@ function AddRecipePage() {
                 <div>
                 <label htmlFor="tempsPrep">Temps de préparation (en minutes)*</label>
                     <input type="number" id="tempsPrep" name="tempsPrep" required
-                           onChange={(e) => recipeValues(e)}/>
+                           onChange={(e) => recipeValues(e)}
+                           value={recette.tempsPrep || ""}
+                    />
                 </div>
                 <div>
                     <label htmlFor="tempsCuisson">Temps de cuisson (en minutes)</label>
                     <input type="number" id="tempsCuisson" name="tempsCuisson"
-                           onChange={(e) => recipeValues(e)}/>
+                           onChange={(e) => recipeValues(e)}
+                           value={recette.tempsCuisson || ""}
+                    />
                 </div>
                 <div>
                     <label htmlFor="nbrPortion">Nombre de portion*</label>
                     <input type="number" id="nbrPortion" name="nbrPortion" required
-                           onChange={(e) => recipeValues(e)}/>
+                           onChange={(e) => recipeValues(e)}
+                           value={recette.nbrPortion || ""}
+                    />
                 </div>
-
 
                 <div className='listeIngredients'>
                     {recette.ingredients.map((ingredient, index) => (
@@ -192,7 +242,7 @@ function AddRecipePage() {
                                     type="number"
                                     id="ingredientQtt"
                                     name="quantite"
-                                    value={ingredient.quantite}
+                                    value={ingredient.quantite || ""}
                                     onChange={(e) => ingredientsValues(index, e)}
                                 />
                             </div>
@@ -201,7 +251,9 @@ function AddRecipePage() {
                                 {tabUnites && tabUnites.length > 0 ? (
                                     <select name="uniteNom"
                                             id="uniteNom"
-                                            onChange={(e) => ingredientsValues(index, e)}>
+                                            onChange={(e) => ingredientsValues(index, e)}
+                                            value={recette.ingredients[index]?.uniteNom || ""}
+                                    >
                                         {tabUnites.map((unite) => (
                                             <option key={unite.id} value={unite.uniteNom}>
                                                 {unite.uniteNom}
@@ -218,13 +270,13 @@ function AddRecipePage() {
                                     type="text"
                                     id="ingredientNom"
                                     name="ingredientNom"
-                                    value={ingredient.ingredientNom}
+                                    value={ingredient.ingredientNom || ""}
                                     required
                                     onChange={(e) => ingredientsValues(index, e)}
                                 />
                             </div>
                             <div className='deletediv'>
-                                <a onClick={(e) => deleteIngredient(index, e)} className='deletebutton'><FaX /></a>
+                                <a onClick={(e) => deleteIngredient(index, e)} className='deletebutton'><FaX/></a>
                             </div>
                         </div>
                     ))}
@@ -247,7 +299,7 @@ function AddRecipePage() {
                                 />
                             </div>
                             <div className='deletediv'>
-                                <a onClick={(e) => deleteEtape(index, e)} className='deletebutton'><FaX /></a>
+                                <a onClick={(e) => deleteEtape(index, e)} className='deletebutton'><FaX/></a>
                             </div>
                         </div>
                     ))}
@@ -262,6 +314,7 @@ function AddRecipePage() {
                                     <label htmlFor={tag.id}>
                                         <input type="checkbox"
                                                value={tag.id}
+                                               checked={recette.selectedTags.some(t => String(t.id) === String(tag.id))}
                                                onChange={(e) => tagsValue(e)}
                                         />
                                         {tag.tagNom}
@@ -274,10 +327,10 @@ function AddRecipePage() {
                     )}
                 </div>
 
-                <button type="submit" className="mainbutton">Publier</button>
+                <button type="submit" className="mainbutton">Enregistrer</button>
             </form>
         </div>
     );
 }
 
-export default AddRecipePage;
+export default UpdateRecipePage;
