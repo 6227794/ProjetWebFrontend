@@ -21,7 +21,7 @@ function Header() {
                     <div className="dropdown">
                         <Link className="dropbtn mainlinknav" to={`/Profil`}>Profil</Link>
                         <div className="dropdown-content">
-                            <Link className="" to={`/FavoriteRecipe`}> Favoris </Link>
+                            <Link className="" to={`/MyRecipes`}> Mes recettes </Link>
                             <Link className="" to={`/Connexion`}> Connexion </Link>
                             <Link className="" to={`/Inscription`}> Inscription </Link>
 
