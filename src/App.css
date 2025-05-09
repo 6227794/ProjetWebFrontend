@@ -557,17 +557,17 @@ footer a {
 }
 
 /* - - - - - - V I E W  R E C I P E - - - - - - */
-.imgRecette {
-  width: 470px;
-  height: 337px;
-  flex-shrink: 0;
-}
 
 .recipeimage {
   display: flex;
   gap: 2rem;
   align-items: flex-start;
 }
+
+.imgRecette {
+   width: 24%;
+   flex-shrink: 0;
+ }
 
 .recipedescription {
   flex: 1;

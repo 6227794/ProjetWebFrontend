@@ -8,13 +8,14 @@ function UpdateRecipePage() {
 
     const {id} = useParams();
 
+    //const [image, setImage] = useState(null);
+
     const [recette, setRecette] = useState({
         id:"",
         nomRecette: "",
         tempsPrep: "",
         tempsCuisson: "",
         nbrPortion: "",
-        imageUrl: "",
         user: {id: ""},
         categorie: {
             id: "",
@@ -41,7 +42,7 @@ function UpdateRecipePage() {
 
     useEffect(() => {
         loadSelectedTags();
-    }, [recette.id]);
+    }, [recette.tags]);
 
     const loadRecipe = async () => {
         const result = await axios.get(`${apiUrl}/recette/getRecipe/${id}`);
@@ -68,14 +69,26 @@ function UpdateRecipePage() {
     const updateRecipe = async (e) => {
         e.preventDefault();
 
-        console.log(recette)
-        /*try {
+        console.log(recette);
+
+        /*
+        const formData = new FormData();
+        formData.append("image",image);
+        formData.append("recetteDTO", JSON.stringify(recette))
+
+        try {
+            const response = await axios.put(`${apiUrl}/recette/updateRecipe`, formData);
+            console.log(response.data);
+        } catch (error) {
+            console.log(error)
+        }*/
+        try {
             const result = await axios.put(`${apiUrl}/recette/updateRecipe`, recette);
 
             navigate(`/ViewRecipe/${result.data}`);
         }catch(error) {
                 console.log(error);
-        }*/
+        }
     }
 
     const populateUnits = async () => {
@@ -150,6 +163,12 @@ function UpdateRecipePage() {
         setRecette({...recette, selectedTags: updateSelectedTags});
     }
 
+    /*
+    const handleFileChange = (e) => {
+        //setRecette({...recette, image: e.target.files[0]});
+        //setImage(e.target.files[0]);
+    };*/
+
     const deleteIngredient = (index) =>{
         const updateIngredients = [...recette.ingredients]
         updateIngredients.splice(index, 1);
@@ -167,6 +186,7 @@ function UpdateRecipePage() {
             <h1>Modifier la recette</h1>
             <form onSubmit={(e) => updateRecipe(e)} method="post">
                 <div>
+                    {/*<input type="file" onChange={handleFileChange}/>*/}
                     <label htmlFor="nomRecette">Nom de la recette*</label>
                     <input type="text" id="nomRecette" name="nomRecette"
                            placeholder="Nom de la recette"
