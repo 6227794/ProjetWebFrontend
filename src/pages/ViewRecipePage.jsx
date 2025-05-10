@@ -85,11 +85,11 @@ function ViewRecipePage() {
 
                     <div className="listDisplay">
                         <h3>Instructions</h3>
-                        <ul className="listII">
+                        <ol className="listII">
                             {viewRecipe.etapes && viewRecipe.etapes.map((instruction, index) => (
                                 <li key={index}>{instruction.description}</li>
                             ))}
-                        </ul>
+                        </ol>
                     </div>
                 </div>
             </div>

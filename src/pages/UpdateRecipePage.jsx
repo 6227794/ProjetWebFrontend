@@ -237,20 +237,20 @@ function UpdateRecipePage() {
                     {recette.ingredients.map((ingredient, index) => (
                         <div className='ingredientdiv' id='ingredientdiv' key={index}>
                             <div className='fifthofspace'>
-                                <label htmlFor="quantite">Quantité</label>
+                                <label htmlFor={`quantite-${index}`}>Quantité</label>
                                 <input
                                     type="number"
-                                    id="ingredientQtt"
+                                    id={`quantite-${index}`}
                                     name="quantite"
                                     value={ingredient.quantite || ""}
                                     onChange={(e) => ingredientsValues(index, e)}
                                 />
                             </div>
                             <div className='fifthofspace'>
-                                <label htmlFor="ingredientUnite">Unité</label>
+                                <label htmlFor={`uniteNom-${index}`}>Unité</label>
                                 {tabUnites && tabUnites.length > 0 ? (
                                     <select name="uniteNom"
-                                            id="uniteNom"
+                                            id={`uniteNom-${index}`}
                                             onChange={(e) => ingredientsValues(index, e)}
                                             value={recette.ingredients[index]?.uniteNom || ""}
                                     >
@@ -265,10 +265,10 @@ function UpdateRecipePage() {
                                 )}
                             </div>
                             <div>
-                                <label htmlFor="ingredientNom">Nom de l'ingrédient*</label>
+                                <label htmlFor={`ingredientNom-${index}`}>Nom de l'ingrédient*</label>
                                 <input
                                     type="text"
-                                    id="ingredientNom"
+                                    id={`ingredientNom-${index}`}
                                     name="ingredientNom"
                                     value={ingredient.ingredientNom || ""}
                                     required
@@ -306,13 +306,14 @@ function UpdateRecipePage() {
                 </div>
                 <a className='addbutton' onClick={addEtapeInput}>Ajouter une étape</a>
                 <div>
-                    <label htmlFor="tags" className="taglabel">Tags descriptif</label>
+                    <label className="taglabel">Tags descriptif</label>
                     {tabTags && tabTags.length > 0 ? (
                         <div name="tags" id="tags" className="tagsformdisplay">
-                            {tabTags.map((tag) => (
+                            {tabTags.map((tag, index) => (
                                 <div key={tag.id} className="tagcheckbox">
-                                    <label htmlFor={tag.id}>
+                                    <label htmlFor={`tag-${index}`}>
                                         <input type="checkbox"
+                                               id={`tag-${index}`}
                                                value={tag.id}
                                                checked={recette.selectedTags.some(t => String(t.id) === String(tag.id))}
                                                onChange={(e) => tagsValue(e)}

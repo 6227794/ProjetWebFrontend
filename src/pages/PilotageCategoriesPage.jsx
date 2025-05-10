@@ -1,27 +1,53 @@
 import {useEffect, useState} from 'react';
 import axios from "axios";
-import {Link} from "react-router-dom";
 import {apiUrl} from "../../config.js";
 
 function MyRecipesPage() {
     const [tabCategories, setCategories] = useState([]);
+    const [tempId, setTempId] = useState(0);
+
+    const populateCategories = async () => {
+        const result = await axios.get(`${apiUrl}/categorie/getAllCategorie`);
+        setCategories(result.data);
+    }
 
     useEffect(() => {
-        const populateCategories = async () => {
-            const result = await axios.get(`${apiUrl}/categorie/getAllCategorie`);
-            setCategories(result.data);
-        }
-
         populateCategories();
     }, []);
 
-    function saveCategorie(id) {
-        console.log(tabCategories[tabCategories.map(e => e.id).indexOf(id)]);
+    const saveCategorie = async (categorie) => {
+        if (categorie.id > 0 ){
+            try {
+                await axios.put(`${apiUrl}/categorie/updateCategorie`, categorie);
+                populateCategories();
+            }catch(error) {
+                console.log(error);
+            }
+        } else {
+            try {
+                await axios.post(`${apiUrl}/categorie/newCategorie`, categorie);
+                populateCategories();
+            }catch(error) {
+                console.log(error);
+            }
+        }
     }
 
     function addCategorie() {
-        console.log(tabCategories)
-        setCategories([...tabCategories, {id:0, CategorieNom:""}]);
+        setCategories([...tabCategories, {id:tempId, CategorieNom:""}]);
+        setTempId(tempId-1);
+    }
+
+    const categoryValue = (index, e) => {
+        const { name, value } = e.target;
+
+        const categories = [...tabCategories];
+        const categorieToUpdate = {...categories[index]};
+
+        categorieToUpdate[name] = value;
+        categories[index] =categorieToUpdate;
+
+        setCategories(categories);
     }
 
     return (
@@ -36,12 +62,16 @@ function MyRecipesPage() {
                 </tr>
                 </thead>
                 <tbody>
-                {tabCategories.map((data) => (
+                {tabCategories.map((data, index) => (
                     <tr key={data.id}>
-                        <td>{data.id}</td>
-                        <td>{data.categorieNom}</td>
+                        <td>{index + 1}</td>
+                        <td><input name="categorieNom" required
+                                   onChange={(e) => categoryValue(index, e)}
+                                   value={data.categorieNom ?? ''}
+                        />
+                        </td>
                         <td>
-                            <button onClick={() => saveCategorie(data.id)} className='updateitem'>Enregistrer</button>
+                            <button onClick={() => saveCategorie(data)} className='updateitem'>Enregistrer</button>
                         </td>
                     </tr>
                 ))

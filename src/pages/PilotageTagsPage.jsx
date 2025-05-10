@@ -1,11 +1,10 @@
 import {useEffect, useState} from 'react';
 import axios from "axios";
-import {Link} from "react-router-dom";
 import {apiUrl} from "../../config.js";
-import Button from "bootstrap/js/src/button.js";
 
 function MyRecipesPage() {
-    const [tabTags, setTags] = useState([{id:0,tagNom:""}]);
+    const [tabTags, setTags] = useState([]);
+    const [tempId, setTempId] = useState(0);
 
     const populateTags = async () => {
         const result = await axios.get(`${apiUrl}/tag/getAllTag`);
@@ -16,13 +15,40 @@ function MyRecipesPage() {
         populateTags();
     }, []);
 
-    function saveTag(id) {
-        console.log(tabTags[tabTags.map(e => e.id).indexOf(id)]);
+    const saveTag = async (tag) => {
+        if (tag.id > 0 ){
+            console.log(tag)
+            try{
+                await axios.put(`${apiUrl}/tag/updateTag`, tag);
+                populateTags();
+            } catch(error) {
+                console.log(error);
+            }
+        } else {
+            try{
+                await axios.post(`${apiUrl}/tag/newTag`, tag);
+                populateTags();
+            } catch(error) {
+                console.log(error);
+            }
+        }
     }
 
     function addTag() {
-        console.log(tabTags)
-        setTags([...tabTags, {id:0, tagNom:""}]);
+        setTags([...tabTags, {id:tempId, tagNom:""}]);
+        setTempId(tempId-1);
+    }
+
+    const tagValue = (index, e) => {
+        const { name, value } = e.target;
+
+        const tags = [...tabTags];
+        const tagToUpdate = {...tags[index]};
+
+        tagToUpdate[name] = value;
+        tags[index] = tagToUpdate;
+
+        setTags(tags);
     }
 
     return (
@@ -37,11 +63,14 @@ function MyRecipesPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {tabTags.map((data) => (
+                    {tabTags.map((data, index) => (
                         <tr key={data.id}>
-                            <td>{data.id}</td>
-                            <td>{data.tagNom}</td>
-                            <td><button onClick={() => saveTag(data.id)} className='updateitem'>Enregistrer</button></td>
+                            <td>{index + 1}</td>
+                            <td><input name="tagNom" required
+                                       onChange={(e) => tagValue(index, e)}
+                                       value={data.tagNom ?? ''}
+                            /></td>
+                            <td><button onClick={() => saveTag(data)} className='updateitem'>Enregistrer</button></td>
                         </tr>
                     ))
                     }

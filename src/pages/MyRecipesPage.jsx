@@ -8,33 +8,34 @@ import errorbg from "../assets/empty-plate.jpg";
 function MyRecipesPage() {
     const [tabRecipes, setRecipes] = useState([]);
 
+    const loadRecettes = async () => {
+        try {
+            const response = await axios.get(`${apiUrl}/recette/getAllRecipes`);
+            const rawRecipes = response.data;
+
+            const updatedRecipes = await Promise.all(
+                rawRecipes.map(async (recetteDTO) => {
+                    return {
+                        ...recetteDTO,
+                        imageUrl: `${apiUrl}/images/${recetteDTO.id}`
+
+                    };
+                })
+            );
+
+            setRecipes(updatedRecipes);
+        } catch (error) {
+            console.error("Erreur fetch recettes :", error);
+        }
+    };
+
     useEffect(() => {
-        const loadRecettes = async () => {
-            try {
-                const response = await axios.get(`${apiUrl}/recette/getAllRecipes`);
-                const rawRecipes = response.data;
-
-                const updatedRecipes = await Promise.all(
-                    rawRecipes.map(async (recetteDTO) => {
-                        return {
-                            ...recetteDTO,
-                            imageUrl: `${apiUrl}/images/${recetteDTO.id}`
-
-                        };
-                    })
-                );
-
-                setRecipes(updatedRecipes);
-            } catch (error) {
-                console.error("Erreur fetch recettes :", error);
-            }
-        };
-
         loadRecettes();
     }, []);
 
     const deleteRecipe = async (id) => {
         await axios.delete(`${apiUrl}/recette/deleteRecipe/${id}`);
+        loadRecettes();
     };
 
     return (

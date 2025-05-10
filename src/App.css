@@ -407,6 +407,13 @@ nav {
   background-color: var(--warning) !important;
 }
 
+.myrecipecardactions a:hover, .deletemyrecipelink:hover, .updateitem:hover{
+  background-color: var(--lime_green) !important;
+  color: var(--forest_green) !important;
+  box-shadow: 0.2rem 0.2rem var(--forest_green);
+  cursor: pointer;
+}
+
 /* - - - - - - F O R M - - - - - - */
 
 form {
@@ -522,6 +529,10 @@ input[type="checkbox"] {
   color: var(--warning);
   cursor: pointer;
 }
+
+label{
+  padding-left: 3px;
+}
 /* - - - - - - F O O T E R - - - - - - */
 
 footer {
@@ -599,7 +610,7 @@ footer a {
   transition: 0.5s;
 }
 
-.printButton:hover {
+.printButton:hover, .additembutton:hover {
   background-color: var(--lime_green);
   color: var(--forest_green);
   box-shadow: 0.2rem 0.2rem var(--forest_green);
