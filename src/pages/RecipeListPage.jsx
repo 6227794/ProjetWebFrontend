@@ -1,28 +1,41 @@
-import TempImg from "../assets/hazelnut-brownies.jpg";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import {apiUrl} from "../../config.js";
+import errorbg from '../assets/empty-plate.jpg'
+
 
 function RecipeListPage() {
     const [tabRecipes, setRecipes] = useState([]);
 
     useEffect(() => {
-        const fetchRecettes = async () => {
+        const loadRecettes = async () => {
             try {
                 const response = await axios.get(`${apiUrl}/recette/getAllRecipes`);
-                setRecipes(response.data);
+                const rawRecipes = response.data;
+
+                const updatedRecipes = await Promise.all(
+                    rawRecipes.map(async (recetteDTO) => {
+                        return {
+                            ...recetteDTO,
+                            imageUrl: `${apiUrl}/images/${recetteDTO.id}`
+
+                        };
+                    })
+                );
+
+                setRecipes(updatedRecipes);
             } catch (error) {
-                console.error("Error fetching recettes:", error);
+                console.error("Erreur fetch recettes :", error);
             }
         };
 
-        fetchRecettes();
+        loadRecettes();
     }, []);
 
     return (
         <div className='maindivcontent'>
-            <h1>Recipe List Page</h1>
+            <h1>Toutes les recettes</h1>
 
             <div className='recipedisplay'>
                 {
@@ -31,7 +44,10 @@ function RecipeListPage() {
                               className='linkrecipecard'>
                             <div className='recipecard'>
                                 <div>
-                                    <img src={TempImg} alt="Hazelnut brownies"/>
+                                    <img src={data.imageUrl}
+                                         onError={(e) => {e.target.src = errorbg}}
+                                         alt="Aperçu de la recette"
+                                    />
                                     <h2>{data.nomRecette}</h2>
                                     <p>Nombre de portion : {data.nbrPortion}</p>
                                     <p>Temps de préparation : {data.tempsPrep}</p>

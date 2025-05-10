@@ -305,14 +305,15 @@ nav {
 }
 
 .recipecard img {
-  max-width: 100%;
-  height: auto;
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
   margin-bottom: 1rem;
 }
 
 .myrecipecard img {
-  max-width: 30%;
-  height: auto;
+  width: 30%;
+  height: 8rem;
   object-fit: cover;
   margin-right: 1rem;
 }
@@ -383,7 +384,7 @@ nav {
   gap: 0.75rem;
 }
 
-.myrecipecardactions a, .deletemyrecipelink{
+.myrecipecardactions a, .deletemyrecipelink, .updateitem{
     background-color: var(--light_green);
     padding: 0.3rem 0.6rem;
     display: block;
@@ -584,7 +585,7 @@ footer a {
   justify-content: space-between;
 }
 
-.printButton{
+.printButton, .additembutton{
   background-color: var(--forest_green);
   color: var(--beige);
   border-radius: var(--innerborder);
@@ -610,4 +611,27 @@ footer a {
   display: flex;
   gap: 0.5rem 0.75rem;
   flex-flow: row wrap;
+}
+
+
+/* - - - - - - P I L O T A G E - - - - - - */
+.tablepilotage{
+  width: 100%;
+  border-radius: var(--innerborder);
+  margin-bottom: 1.5rem;
+}
+
+.tablepilotage td, .tablepilotage th {
+  border: 1px solid var(--lighter_green);
+  padding: 8px;
+}
+
+.tablepilotage tr:hover {background-color: var(--greige);}
+
+.tablepilotage th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: var(--forest_green);
+  color: var(--beige);
 }

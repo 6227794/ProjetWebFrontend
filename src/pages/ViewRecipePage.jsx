@@ -21,6 +21,7 @@ function ViewRecipePage() {
         setRecipe(result.data);
         try {
             setImageUrl(`${apiUrl}/images/${id}`);
+            console.log(`${apiUrl}/images/${id}`)
         } catch (error) {
             console.error("Error ", error);
         }
@@ -43,12 +44,8 @@ function ViewRecipePage() {
     return (
         <div className="maindivcontent">
             <div className="recipeimage">
-                <img
-                    src={
-                        imageUrl
-                            ? imageUrl
-                            : errorbg
-                    }
+                <img src={imageUrl}
+                    onError={(e) => {e.target.src = errorbg}}
                     alt="Aperçu de la recette"
                     className="imgRecette"
                 />

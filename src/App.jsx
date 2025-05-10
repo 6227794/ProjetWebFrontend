@@ -15,6 +15,8 @@ import InscriptionPage from './pages/InscriptionPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import UpdateRecipePage from "./pages/UpdateRecipePage.jsx";
+import PilotageCategoriesPage from "./pages/PilotageCategoriesPage.jsx";
+import PilotageTagsPage from "./pages/PilotageTagsPage.jsx";
 import {useEffect, useState} from "react";
 
 
@@ -48,6 +50,8 @@ function App() {
             <Route path="/AddRecipe" element={isConnected ? <AddRecipePage/> : <Navigate to="/Connexion"/>}/>
             <Route path="/Profil" element={isConnected ? <ProfilPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
             <Route path="/MyRecipes" element={isConnected ? <MyRecipesPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
+            <Route path="/PilotageCategories" element={isConnected ? <PilotageCategoriesPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
+            <Route path="/PilotageTags" element={isConnected ? <PilotageTagsPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
             <Route path="*" element={<ErrorPage/>}/>
           </Routes>
           <Footer/>
