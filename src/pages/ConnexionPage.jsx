@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import {apiUrl} from "../../config.js";
 
 function ConnexionPage() {
     const [userData, setUserData] = useState({
@@ -24,7 +24,7 @@ function ConnexionPage() {
 
         try {
             const reponse = await axios.post(
-                'http://localhost:7246/api/authentification/connexion',
+                `${apiUrl}/authentification/connexion`,
                 {
                     courriel: userData.courriel,
                     motDePasse: userData.motDePasse
@@ -37,7 +37,6 @@ function ConnexionPage() {
                 );
 
             if (reponse.data.succes){
-                console.log('TU ES CONNECTEEEEEER')
                 localStorage.setItem('isConnected', 'true');
                 localStorage.setItem('courriel', userData.courriel);
                 window.dispatchEvent(new Event('storage'));
