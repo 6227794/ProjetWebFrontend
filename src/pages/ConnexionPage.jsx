@@ -65,7 +65,7 @@ function ConnexionPage() {
                     <input type="password" id="motDePasse" name="motDePasse" value={userData.motDePasse} onChange={handleChage} minLength="8" required />
                 </div>
 
-                <button type="submit" className="mainbutton">Se connecter</button>
+                <button type="submit" className="mainbutton" id="connexion">Se connecter</button>
             </form>
 
         </div>

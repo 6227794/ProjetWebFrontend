@@ -12,13 +12,13 @@ function RecipeListPage() {
         const loadRecettes = async () => {
             try {
                 const response = await axios.get(`${apiUrl}/recette/getAllRecipes`);
-                const rawRecipes = response.data;
+                const recipes = response.data;
 
                 const updatedRecipes = await Promise.all(
-                    rawRecipes.map(async (recetteDTO) => {
+                    recipes.map(async (recetteDTO) => {
                         return {
                             ...recetteDTO,
-                            imageUrl: `${apiUrl}/images/${recetteDTO.id}`
+                            imageUrl: `${apiUrl}/images/${recetteDTO.imageId}`
 
                         };
                     })

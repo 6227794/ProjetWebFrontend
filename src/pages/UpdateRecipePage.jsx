@@ -8,8 +8,6 @@ function UpdateRecipePage() {
 
     const {id} = useParams();
 
-    //const [image, setImage] = useState(null);
-
     const [recette, setRecette] = useState({
         id:"",
         nomRecette: "",
@@ -69,19 +67,6 @@ function UpdateRecipePage() {
     const updateRecipe = async (e) => {
         e.preventDefault();
 
-        console.log(recette);
-
-        /*
-        const formData = new FormData();
-        formData.append("image",image);
-        formData.append("recetteDTO", JSON.stringify(recette))
-
-        try {
-            const response = await axios.put(`${apiUrl}/recette/updateRecipe`, formData);
-            console.log(response.data);
-        } catch (error) {
-            console.log(error)
-        }*/
         try {
             const result = await axios.put(`${apiUrl}/recette/updateRecipe`, recette);
 
@@ -162,12 +147,6 @@ function UpdateRecipePage() {
 
         setRecette({...recette, selectedTags: updateSelectedTags});
     }
-
-    /*
-    const handleFileChange = (e) => {
-        //setRecette({...recette, image: e.target.files[0]});
-        //setImage(e.target.files[0]);
-    };*/
 
     const deleteIngredient = (index) =>{
         const updateIngredients = [...recette.ingredients]

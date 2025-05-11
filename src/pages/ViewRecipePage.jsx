@@ -15,13 +15,19 @@ function ViewRecipePage() {
         loadRecipe();
     }, []);
 
+    useEffect(() => {
+        loadImageRecipe();
+    }, [viewRecipe.imageId]);
+
     const loadRecipe = async () => {
         const result = await axios.get(`${apiUrl}/recette/getRecipe/${id}`);
 
         setRecipe(result.data);
+    }
+
+    const loadImageRecipe = async () => {
         try {
-            setImageUrl(`${apiUrl}/images/${id}`);
-            console.log(`${apiUrl}/images/${id}`)
+            setImageUrl(`${apiUrl}/images/${viewRecipe.imageId}`);
         } catch (error) {
             console.error("Error ", error);
         }

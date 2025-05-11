@@ -67,6 +67,7 @@ function MyRecipesPage() {
                         <tr key={data.id}>
                             <td>{index + 1}</td>
                             <td><input name="tagNom" required
+                                       id={`tag-${index}`}
                                        onChange={(e) => tagValue(index, e)}
                                        value={data.tagNom ?? ''}
                             /></td>
@@ -77,7 +78,7 @@ function MyRecipesPage() {
                 </tbody>
             </table>
             <div style={{textAlign:"right"}}>
-                <button onClick={addTag} className="additembutton">Ajouter un tag</button>
+                <button onClick={addTag} className="additembutton" id="addTag">Ajouter un tag</button>
             </div>
         </div>
     );

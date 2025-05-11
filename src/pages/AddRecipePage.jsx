@@ -275,7 +275,7 @@ function AddRecipePage() {
                     )}
                 </div>
 
-                <button type="submit" className="mainbutton">Publier</button>
+                <button type="submit" className="mainbutton" id="ajouterrecette">Publier</button>
             </form>
         </div>
     );
