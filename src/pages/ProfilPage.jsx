@@ -4,6 +4,7 @@ import axios from "axios";
 
 
 function ProfilePage({setTrigger}) {
+    // const id = localStorage.getItem('userId');
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -11,18 +12,18 @@ function ProfilePage({setTrigger}) {
         nom : "",
         prenom : "",
         nomAffichage : ""
-    })
+    });
 
     useEffect(() => {
-        if (id){
+/*        if (id){
             loadUser();
-        }
-
-    }, [id]);
+        }*/
+        loadUser();
+    }, []);
 
     const loadUser = async () => {
         const result = await axios.get(`http://localhost:7246/utilisateur/getUser/${id}`);
-        setUserData(result.data);
+        setUserData(result.data)
     }
 
     const userValues = (e) => {
@@ -34,19 +35,18 @@ function ProfilePage({setTrigger}) {
         console.log(userData);
 
         try {
-            const result = await axios.put('http://localhost:7246/api/authentification/updateProfil', userData, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+            const result = await axios.put('http://localhost:7246/utilisateur/updateProfil', userData);
             console.log("Utilisateur mis à jour :", result.data);
+            alert("Modification réussi")
+
         } catch (error) {
             console.log("Erreur lors de la mise à jour :", error);
         }
     }
 
     const handleLogout = () => {
-        localStorage.removeItem('isConnected');
+        ocalStorage.removeItem('userId');
+        localStorage.setItem('isConnected', 'false');
         setTrigger(prev => !prev);
         navigate('/Connexion');
     }
@@ -82,7 +82,7 @@ function ProfilePage({setTrigger}) {
                 </div>
                 <button type="submit" className="mainbutton">Sauvegarder</button>
                 <br/>
-                <button type="submit" className="mainbutton" onClick={handleLogout}>Se déconnecter</button>
+                <button type="button" className="mainbutton" onClick={handleLogout}>Se déconnecter</button>
 
             </form>
         </div>
