@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 function ProfilePage({setTrigger}) {
-    // const id = localStorage.getItem('userId');
+    const idLocal = localStorage.getItem('userId');
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -15,14 +15,17 @@ function ProfilePage({setTrigger}) {
     });
 
     useEffect(() => {
-/*        if (id){
+        if (id ===  idLocal){
             loadUser();
-        }*/
-        loadUser();
+        }else {
+            alert("Po ton compte")
+            navigate('/');
+        }
+
     }, []);
 
     const loadUser = async () => {
-        const result = await axios.get(`http://localhost:7246/utilisateur/getUser/${id}`);
+        const result = await axios.get(`http://localhost:7246/api/utilisateur/getUser/${id}`);
         setUserData(result.data)
     }
 
@@ -35,7 +38,7 @@ function ProfilePage({setTrigger}) {
         console.log(userData);
 
         try {
-            const result = await axios.put('http://localhost:7246/utilisateur/updateProfil', userData);
+            const result = await axios.put('http://localhost:7246/api/utilisateur/updateProfil', userData);
             console.log("Utilisateur mis à jour :", result.data);
             alert("Modification réussi")
 
@@ -45,7 +48,7 @@ function ProfilePage({setTrigger}) {
     }
 
     const handleLogout = () => {
-        ocalStorage.removeItem('userId');
+        localStorage.removeItem('userId');
         localStorage.setItem('isConnected', 'false');
         setTrigger(prev => !prev);
         navigate('/Connexion');

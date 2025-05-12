@@ -37,8 +37,9 @@ function ConnexionPage() {
             );
 
             if (reponse.data.succes){
+                console.log(reponse.data);
                 localStorage.setItem('isConnected', 'true');
-                localStorage.setItem('id', reponse.data.id);
+                localStorage.setItem('userId', reponse.data.utilisateurId);
                 window.dispatchEvent(new Event('storage'));
                 navigate('/');
 
