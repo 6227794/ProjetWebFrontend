@@ -34,7 +34,7 @@ function ConnexionPage() {
                         'Content-Type' : 'application/json'
                     }
                 }
-                );
+            );
 
             if (reponse.data.succes){
                 console.log('TU ES CONNECTEEEEEER')
@@ -73,4 +73,3 @@ function ConnexionPage() {
 }
 
 export default ConnexionPage;
-

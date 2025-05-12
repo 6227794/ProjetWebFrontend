@@ -56,6 +56,7 @@ function InscriptionPage() {
                     courriel : userData.courriel
                     }
                 ));
+                localStorage.setItem("userId", response.data.id);
                 console.log('Inscription réussi yippi');
             }else {
                 setError(response.data.message || "Erreur")

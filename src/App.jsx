@@ -47,8 +47,7 @@ function App() {
             <Route path="/FAQ" element={<FAQPage/>}/>
             <Route path="/MyRecipes" element={<MyRecipesPage/>}/>
             <Route path="/AddRecipe" element={isConnected ? <AddRecipePage/> : <Navigate to="/Connexion"/>}/>
-            <Route path="/Profil" element={isConnected ? <ProfilPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
-            <Route path="/FavoriteRecipe" element={isConnected ? <FavoritePage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
+            <Route path="/Profil/" element={isConnected ? <ProfilPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
             <Route path="*" element={<ErrorPage/>}/>
           </Routes>
           <Footer/>

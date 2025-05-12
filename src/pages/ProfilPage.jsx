@@ -1,13 +1,14 @@
 import {useEffect, useState} from 'react';
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 
 function ProfilePage({setTrigger}) {
-    const {id} = useParams();
+    const id = localStorage.getItem('userId');
     const navigate = useNavigate();
 
     const [userData, setUserData] = useState({
+        id: id,
         nom : "",
         prenom : "",
         nomAffichage : ""
@@ -22,7 +23,10 @@ function ProfilePage({setTrigger}) {
 
     const loadUser = async () => {
         const result = await axios.get(`http://localhost:7246/utilisateur/getUser/${id}`);
-        setUserData(result.data);
+        setUserData({
+            ...result.data,
+            id : id
+        })
     }
 
     const userValues = (e) => {
@@ -34,12 +38,17 @@ function ProfilePage({setTrigger}) {
         console.log(userData);
 
         try {
-            const result = await axios.put('http://localhost:7246/api/authentification/updateProfil', userData, {
+            const result = await axios.put('http://localhost:7246/utilisateur/updateProfil', userData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
             console.log("Utilisateur mis à jour :", result.data);
+            alert("Modification réussi")
+
+            if (result.data.nomAffichage){
+                localStorage.setItem('nomAffichage', result.data.nomAffichage)
+            }
         } catch (error) {
             console.log("Erreur lors de la mise à jour :", error);
         }
@@ -47,6 +56,8 @@ function ProfilePage({setTrigger}) {
 
     const handleLogout = () => {
         localStorage.removeItem('isConnected');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('nomAffichage');
         setTrigger(prev => !prev);
         navigate('/Connexion');
     }
