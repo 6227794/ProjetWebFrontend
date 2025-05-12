@@ -50,12 +50,8 @@ function App() {
             <Route path="/About" element={<AboutPage/>}/>
             <Route path="/FAQ" element={<FAQPage/>}/>
             <Route path="/AddRecipe" element={isConnected ? <AddRecipePage/> : <Navigate to="/Connexion"/>}/>
-
             <Route path="/Profil/:id" element={isConnected ? <ProfilPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
-
-            <Route path="/Profil/:id" element={isConnected ? <ProfilPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
-
-            <Route path="/MyRecipes" element={isConnected ? <MyRecipesPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
+            <Route path="/MyRecipes/:id" element={isConnected ? <MyRecipesPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
             <Route path="/PilotageCategories" element={isConnected ? <PilotageCategoriesPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
             <Route path="/PilotageTags" element={isConnected ? <PilotageTagsPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
             <Route path="*" element={<ErrorPage/>}/>
