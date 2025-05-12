@@ -39,7 +39,7 @@ function App() {
           <Header/>
           <Routes>
             <Route path="/" element={<HomePage/>}/>
-            <Route path="/Connexion" element={isConnected ? <Navigate to="/Profil"/> : <ConnexionPage/>}/>
+            <Route path="/Connexion" element={isConnected ? <Navigate to="/"/> : <ConnexionPage/>}/>
             <Route path="/Inscription" element={<InscriptionPage/>}/>
             <Route path="/Conversion" element={<ConversionPage/>}/>
             <Route path="/RecipeList" element={<RecipeListPage/>}/>
@@ -48,7 +48,7 @@ function App() {
             <Route path="/About" element={<AboutPage/>}/>
             <Route path="/FAQ" element={<FAQPage/>}/>
             <Route path="/AddRecipe" element={isConnected ? <AddRecipePage/> : <Navigate to="/Connexion"/>}/>
-            <Route path="/Profil" element={isConnected ? <ProfilPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
+            <Route path="/Profil/:id" element={isConnected ? <ProfilPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
             <Route path="/MyRecipes" element={isConnected ? <MyRecipesPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
             <Route path="/PilotageCategories" element={isConnected ? <PilotageCategoriesPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
             <Route path="/PilotageTags" element={isConnected ? <PilotageTagsPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
