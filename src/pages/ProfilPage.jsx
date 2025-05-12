@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
+import {apiUrl} from "../../config.js";
 
 
 function ProfilePage({setTrigger}) {
@@ -18,15 +19,15 @@ function ProfilePage({setTrigger}) {
         if (id ===  idLocal){
             loadUser();
         }else {
-            alert("Po ton compte")
+            alert("Accès refusé!")
             navigate('/');
         }
 
     }, []);
 
     const loadUser = async () => {
-        const result = await axios.get(`http://localhost:7246/api/utilisateur/getUser/${id}`);
-        setUserData(result.data)
+        const result = await axios.get(`${apiUrl}/utilisateur/getUser/${id}`);
+        setUserData(result.data);
     }
 
     const userValues = (e) => {
@@ -38,10 +39,9 @@ function ProfilePage({setTrigger}) {
         console.log(userData);
 
         try {
-            const result = await axios.put('http://localhost:7246/api/utilisateur/updateProfil', userData);
+            const result = await axios.put(`${apiUrl}/utilisateur/updateProfil`, userData);
             console.log("Utilisateur mis à jour :", result.data);
             alert("Modification réussi")
-
         } catch (error) {
             console.log("Erreur lors de la mise à jour :", error);
         }
