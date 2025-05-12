@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {apiUrl} from "../../config.js";
@@ -6,12 +6,22 @@ import {apiUrl} from "../../config.js";
 function Header() {
     const navigate = useNavigate();
     const isConnected = localStorage.getItem('isConnected') === ('true');
+    const [profilSousMenu, setProfilSousMenu] = useState("Connexion");
+    const [profilSousMenuLien, setProfilSousMenuLien] = useState("Connexion");
 
     const navigateToProfil = async (e) => {
         e.preventDefault();
         const id = localStorage.getItem('userId');
         navigate(`/Profil/${id}`);
     }
+
+    useEffect(() => {
+        if(isConnected === true){
+            setProfilSousMenu("Profil");
+            const id = localStorage.getItem('userId');
+            setProfilSousMenuLien(`Profil/${id}`);
+        }
+    }, [isConnected]);
 
     return (
         <header className="">
@@ -33,7 +43,7 @@ function Header() {
                         <a className="dropbtn mainlinknav" onClick={navigateToProfil}>Profil</a>
                         <div className="dropdown-content">
                             <Link className="" to={`/MyRecipes`}> Mes recettes </Link>
-                            <Link className="" to={`/Connexion`}> Connexion </Link>
+                            <Link className="" to={`/${profilSousMenuLien}`}> {profilSousMenu} </Link>
                             <Link className="" to={`/Inscription`}> Inscription </Link>
 
                         </div>
