@@ -28,18 +28,18 @@ function ConnexionPage() {
                 {
                     courriel: userData.courriel,
                     motDePasse: userData.motDePasse
-                },
-                {
+                }
+/*                {
                     headers : {
                         'Content-Type' : 'application/json'
                     }
-                }
+                }*/
             );
 
             if (reponse.data.succes){
                 console.log('TU ES CONNECTEEEEEER')
                 localStorage.setItem('isConnected', 'true');
-                localStorage.setItem('courriel', userData.courriel);
+                localStorage.setItem('id', reponse.data.id);
                 window.dispatchEvent(new Event('storage'));
                 navigate('/');
 

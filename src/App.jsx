@@ -37,7 +37,7 @@ function App() {
           <Header/>
           <Routes>
             <Route path="/" element={<HomePage/>}/>
-            <Route path="/Connexion" element={isConnected ? <Navigate to="/Profil"/> : <ConnexionPage/>}/>
+            <Route path="/Connexion" element={isConnected ? <Navigate to="/"/> : <ConnexionPage/>}/>
             <Route path="/Inscription" element={<InscriptionPage/>}/>
             <Route path="/Conversion" element={<ConversionPage/>}/>
             <Route path="/RecipeList" element={<RecipeListPage/>}/>
@@ -47,7 +47,7 @@ function App() {
             <Route path="/FAQ" element={<FAQPage/>}/>
             <Route path="/MyRecipes" element={<MyRecipesPage/>}/>
             <Route path="/AddRecipe" element={isConnected ? <AddRecipePage/> : <Navigate to="/Connexion"/>}/>
-            <Route path="/Profil/" element={isConnected ? <ProfilPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
+            <Route path="/Profil/:id" element={isConnected ? <ProfilPage setTrigger={setTrigger}/> : <Navigate to="/Connexion"/>}/>
             <Route path="*" element={<ErrorPage/>}/>
           </Routes>
           <Footer/>

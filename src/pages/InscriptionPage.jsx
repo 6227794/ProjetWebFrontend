@@ -41,7 +41,6 @@ function InscriptionPage() {
             const response = await axios.post(
                 'http://localhost:7246/api/authentification/inscription',
                 info,
-                //Comme dans Postman
                 {
                     headers : {
                         'Content-Type' : 'application/json'
@@ -51,12 +50,6 @@ function InscriptionPage() {
 
             if (response.data.succes){
                 navigate('/Connexion')
-                localStorage.setItem('user', JSON.stringify({
-                    nomAffichage : userData.nomAffichage,
-                    courriel : userData.courriel
-                    }
-                ));
-                localStorage.setItem("userId", response.data.id);
                 console.log('Inscription réussi yippi');
             }else {
                 setError(response.data.message || "Erreur")
@@ -66,7 +59,6 @@ function InscriptionPage() {
             setError('Échec d\'inscription');
         }
     }
-
 
 
     return (

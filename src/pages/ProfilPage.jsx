@@ -1,32 +1,29 @@
 import {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 
 
 function ProfilePage({setTrigger}) {
-    const id = localStorage.getItem('userId');
+    // const id = localStorage.getItem('userId');
+    const {id} = useParams();
     const navigate = useNavigate();
 
     const [userData, setUserData] = useState({
-        id: id,
         nom : "",
         prenom : "",
         nomAffichage : ""
-    })
+    });
 
     useEffect(() => {
-        if (id){
+/*        if (id){
             loadUser();
-        }
-
-    }, [id]);
+        }*/
+        loadUser();
+    }, []);
 
     const loadUser = async () => {
         const result = await axios.get(`http://localhost:7246/utilisateur/getUser/${id}`);
-        setUserData({
-            ...result.data,
-            id : id
-        })
+        setUserData(result.data)
     }
 
     const userValues = (e) => {
@@ -38,26 +35,18 @@ function ProfilePage({setTrigger}) {
         console.log(userData);
 
         try {
-            const result = await axios.put('http://localhost:7246/utilisateur/updateProfil', userData, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+            const result = await axios.put('http://localhost:7246/utilisateur/updateProfil', userData);
             console.log("Utilisateur mis à jour :", result.data);
             alert("Modification réussi")
 
-            if (result.data.nomAffichage){
-                localStorage.setItem('nomAffichage', result.data.nomAffichage)
-            }
         } catch (error) {
             console.log("Erreur lors de la mise à jour :", error);
         }
     }
 
     const handleLogout = () => {
-        localStorage.removeItem('isConnected');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('nomAffichage');
+        ocalStorage.removeItem('userId');
+        localStorage.setItem('isConnected', 'false');
         setTrigger(prev => !prev);
         navigate('/Connexion');
     }
@@ -93,7 +82,7 @@ function ProfilePage({setTrigger}) {
                 </div>
                 <button type="submit" className="mainbutton">Sauvegarder</button>
                 <br/>
-                <button type="submit" className="mainbutton" onClick={handleLogout}>Se déconnecter</button>
+                <button type="button" className="mainbutton" onClick={handleLogout}>Se déconnecter</button>
 
             </form>
         </div>

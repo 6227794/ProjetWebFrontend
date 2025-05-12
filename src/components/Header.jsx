@@ -1,7 +1,18 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import {apiUrl} from "../../config.js";
 
 function Header() {
+    const navigate = useNavigate();
+    const isConnected = localStorage.getItem('isConnected') === ('true');
+
+    const navigateToProfil = async (e) => {
+        e.preventDefault();
+        const id = localStorage.getItem('userId');
+        navigate(`/Profil/${id}`);
+    }
+
     return (
         <header className="">
             <nav>
@@ -19,7 +30,7 @@ function Header() {
                     <li className=""><Link className="mainlinknav" to={`/Conversion`}> Outil de conversion </Link></li>
                     <li className=""><Link className="mainlinknav" to={`/AddRecipe`}> Ajouter une recette </Link></li>
                     <div className="dropdown">
-                        <Link className="dropbtn mainlinknav" to={`/Profil`}>Profil</Link>
+                        <a className="dropbtn mainlinknav" onClick={navigateToProfil}>Profil</a>
                         <div className="dropdown-content">
                             <Link className="" to={`/FavoriteRecipe`}> Favoris </Link>
                             <Link className="" to={`/Connexion`}> Connexion </Link>
