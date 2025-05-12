@@ -15,12 +15,19 @@ function ViewRecipePage() {
         loadRecipe();
     }, []);
 
+    useEffect(() => {
+        loadImageRecipe();
+    }, [viewRecipe.imageId]);
+
     const loadRecipe = async () => {
         const result = await axios.get(`${apiUrl}/recette/getRecipe/${id}`);
 
         setRecipe(result.data);
+    }
+
+    const loadImageRecipe = async () => {
         try {
-            setImageUrl(`${apiUrl}/images/${id}`);
+            setImageUrl(`${apiUrl}/images/${viewRecipe.imageId}`);
         } catch (error) {
             console.error("Error ", error);
         }
@@ -43,12 +50,8 @@ function ViewRecipePage() {
     return (
         <div className="maindivcontent">
             <div className="recipeimage">
-                <img
-                    src={
-                        imageUrl
-                            ? imageUrl
-                            : errorbg
-                    }
+                <img src={imageUrl}
+                    onError={(e) => {e.target.src = errorbg}}
                     alt="Aperçu de la recette"
                     className="imgRecette"
                 />
@@ -88,11 +91,11 @@ function ViewRecipePage() {
 
                     <div className="listDisplay">
                         <h3>Instructions</h3>
-                        <ul className="listII">
+                        <ol className="listII">
                             {viewRecipe.etapes && viewRecipe.etapes.map((instruction, index) => (
                                 <li key={index}>{instruction.description}</li>
                             ))}
-                        </ul>
+                        </ol>
                     </div>
                 </div>
             </div>

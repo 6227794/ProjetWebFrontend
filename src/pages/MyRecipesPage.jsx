@@ -1,30 +1,41 @@
 import {useEffect, useState} from 'react';
 import axios from "axios";
 import {Link} from "react-router-dom";
-import TempImg from "../assets/hazelnut-brownies.jpg";
 import {apiUrl} from "../../config.js";
+import errorbg from "../assets/empty-plate.jpg";
 
 function MyRecipesPage() {
     const [tabRecipes, setRecipes] = useState([]);
 
-    const loadRecette = async () => {
+    const loadRecettes = async () => {
         try {
-            const result1 = await axios.get(`${apiUrl}/recette/getRecipesByUserId/1`);
+            const response = await axios.get(`${apiUrl}/recette/getAllRecipes`);
+            const recipes = response.data;
 
-            setRecipes(result1.data);
+            const updatedRecipes = await Promise.all(
+                recipes.map(async (recetteDTO) => {
+                    return {
+                        ...recetteDTO,
+                        imageUrl: `${apiUrl}/images/${recetteDTO.imageId}`
+
+                    };
+                })
+            );
+
+            setRecipes(updatedRecipes);
         } catch (error) {
-            console.error("Error fetching recettes:", error);
+            console.error("Erreur fetch recettes :", error);
         }
     };
 
+    useEffect(() => {
+        loadRecettes();
+    }, []);
+
     const deleteRecipe = async (id) => {
         await axios.delete(`${apiUrl}/recette/deleteRecipe/${id}`);
-        loadRecette();
+        loadRecettes();
     };
-
-    useEffect(() => {
-        loadRecette();
-    }, []);
 
     return (
         <div className='maindivcontent'>
@@ -33,11 +44,16 @@ function MyRecipesPage() {
                 {
                     tabRecipes.map((data) => (
                             <div className='myrecipecard' key={data.id}>
-                                <img src={TempImg} alt="Hazelnut brownies"/>
+                                <img src={data.imageUrl}
+                                     onError={(e) => {
+                                         e.target.src = errorbg
+                                     }}
+                                     alt="Aperçu de la recette"
+                                />
                                 <div className='myrecipecardactions'>
                                     <h3>{data.nomRecette}</h3>
                                     <div className='recipeactions'>
-                                        <Link to={`/ViewRecipe/${data.id}`}>
+                                    <Link to={`/ViewRecipe/${data.id}`}>
                                             Voir la recette
                                         </Link>
                                         <Link to={`/UpdateRecipe/${data.id}`} className='updatemyrecipelink'>
