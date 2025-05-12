@@ -6,6 +6,7 @@ import errorbg from "../assets/empty-plate.jpg";
 
 function MyRecipesPage() {
     const [tabRecipes, setRecipes] = useState([]);
+    const {id} = useParams();
 
     const loadRecettes = async () => {
         try {
