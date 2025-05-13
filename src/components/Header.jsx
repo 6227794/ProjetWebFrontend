@@ -1,30 +1,43 @@
 import React, {useEffect, useState} from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import {apiUrl} from "../../config.js";
 
-function Header() {
-    const navigate = useNavigate();
-    const isConnected = localStorage.getItem('isConnected') === ('true');
-    const [profilSousMenu, setProfilSousMenu] = useState("Connexion");
-    const [profilSousMenuLien, setProfilSousMenuLien] = useState("Connexion");
 
-    const navigateToProfil = async (e) => {
-        e.preventDefault();
-        const id = localStorage.getItem('userId');
-        navigate(`/Profil/${id}`);
+function Header() {
+    const isConnected = localStorage.getItem('isConnected') === ('true');
+    const [profilMenuLien, setProfilMenuLien] = useState("Connexion");
+    const [profilSousMenu, setProfilSousMenu] = useState("Connexion");
+    const [profilSousMenu2Lien, setProfilSousMenu2Lien] = useState("Connexion");
+    const [profilSousMenu1Lien, setProfilSousMenu1Lien] = useState("Connexion");
+    const [tabCategories, setCategories] = useState([]);
+
+    const populateCategories = async () => {
+        const result = await axios.get(`${apiUrl}/categorie/getAllCategorie`);
+        setCategories(result.data);
     }
 
     useEffect(() => {
         if(isConnected === true){
-            setProfilSousMenu("Profil");
+            setProfilSousMenu("Mon profil");
             const id = localStorage.getItem('userId');
-            setProfilSousMenuLien(`Profil/${id}`);
+            setProfilMenuLien(`Profil/${id}`);
+            setProfilSousMenu2Lien(`Profil/${id}`);
+            setProfilSousMenu1Lien(`MyRecipes/${id}`);
+        } else {
+            setProfilMenuLien("Connexion");
+            setProfilSousMenu("Connexion");
+            setProfilSousMenu2Lien("Connexion");
+            setProfilSousMenu1Lien("Connexion");
         }
     }, [isConnected]);
 
+    useEffect(() => {
+        populateCategories();
+    }, [])
+
     return (
-        <header className="">
+        <header>
             <nav>
                 <Link className="nav-link appname" to={`/`}><p className='appname'>Flexi Food</p></Link>
 
@@ -32,19 +45,22 @@ function Header() {
                     <div className="dropdown">
                         <Link className="dropbtn mainlinknav" to={`/RecipeList`}>Répertoire</Link>
                         <div className="dropdown-content">
-                            <Link className="" to={`/`}> lien1 </Link>
-                            <Link className="" to={`/`}> lien2 </Link>
-                            <Link className="" to={`/`}> lien3 </Link>
+                            {tabCategories && tabCategories.length > 0 ? (
+                                    tabCategories.map((categorie) => (
+                                        <Link key={categorie.id} to={`RecipeCategory/${categorie.id}`}> {categorie.categorieNom} </Link>
+                                    ))
+                            ) : (
+                                <p>erreur</p>
+                            )}
                         </div>
                     </div>
-                    <li className=""><Link className="mainlinknav" to={`/Conversion`}> Outil de conversion </Link></li>
-                    <li className=""><Link className="mainlinknav" to={`/AddRecipe`}> Ajouter une recette </Link></li>
+                    <li><Link className="mainlinknav" to={`/AddRecipe`}> Ajouter une recette </Link></li>
                     <div className="dropdown">
-                        <a className="dropbtn mainlinknav" onClick={navigateToProfil}>Profil</a>
+                        <Link className="dropbtn mainlinknav" to={`/${profilMenuLien}`}>Profil</Link>
                         <div className="dropdown-content">
-                            <Link className="" to={`/MyRecipes`}> Mes recettes </Link>
-                            <Link className="" to={`/${profilSousMenuLien}`}> {profilSousMenu} </Link>
-                            <Link className="" to={`/Inscription`}> Inscription </Link>
+                            <Link to={`/${profilSousMenu2Lien}`}> {profilSousMenu} </Link>
+                            <Link to={`/${profilSousMenu1Lien}`}> Mes recettes </Link>
+                            <Link to={`/Inscription`}> Inscription </Link>
 
                         </div>
                     </div>

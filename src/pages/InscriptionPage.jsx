@@ -49,7 +49,6 @@ function InscriptionPage() {
 
             if (response.data.succes){
                 navigate('/Connexion')
-                console.log('Inscription réussi yippi');
             }else {
                 setError(response.data.message || "Erreur")
             }

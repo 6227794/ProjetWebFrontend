@@ -19,7 +19,7 @@ function ProfilePage({setTrigger}) {
         if (id ===  idLocal){
             loadUser();
         }else {
-            alert("Accès refusé!")
+            alert("Accès refusé");
             navigate('/');
         }
 
@@ -27,6 +27,7 @@ function ProfilePage({setTrigger}) {
 
     const loadUser = async () => {
         const result = await axios.get(`${apiUrl}/utilisateur/getUser/${id}`);
+
         setUserData(result.data);
     }
 

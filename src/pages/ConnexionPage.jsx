@@ -29,11 +29,6 @@ function ConnexionPage() {
                     courriel: userData.courriel,
                     motDePasse: userData.motDePasse
                 }
-/*                {
-                    headers : {
-                        'Content-Type' : 'application/json'
-                    }
-                }*/
             );
 
             if (reponse.data.succes){
@@ -58,10 +53,10 @@ function ConnexionPage() {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="courriel">Email</label>
-                    <input type="email" id="courriel" name="courriel" value={userData.courriel} onChange={handleChage}/>
+                    <input type="email" id="courriel" name="courriel" value={userData.courriel} onChange={handleChage} required />
                 </div>
                 <div>
-                    <label htmlFor="=motDePasse">Mot de passe</label>
+                    <label htmlFor="motDePasse">Mot de passe</label>
                     <input type="password" id="motDePasse" name="motDePasse" value={userData.motDePasse} onChange={handleChage} minLength="8" required />
                 </div>
 
