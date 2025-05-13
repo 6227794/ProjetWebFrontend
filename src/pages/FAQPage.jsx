@@ -7,50 +7,45 @@ function FAQPage() {
             <h1>Foire aux questions</h1>
             <div className="accordion accordion-flush" id="accordionFlushExample">
                 <div className="accordion-item">
-                    <h2 className="accordion-header">
+                    <p>
                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapseOne" aria-expanded="false"
                                 aria-controls="flush-collapseOne">
                             Est-ce que je peux ajouter une recette?
                         </button>
-                    </h2>
+                    </p>
                     <div id="flush-collapseOne" className="accordion-collapse collapse"
                          data-bs-parent="#accordionFlushExample">
-                        <div className="accordion-body">Oui! Mais il faut d'abord créer un compte. <Link>Créer un compte</Link>
+                        <div className="accordion-body">Oui! Mais il faut d'abord créer un compte. <Link to={`/Inscription`}>Créer un compte</Link>
                         </div>
                     </div>
                 </div>
                 <div className="accordion-item">
-                    <h2 className="accordion-header">
+                    <p>
                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapseTwo" aria-expanded="false"
                                 aria-controls="flush-collapseTwo">
-                            Accordion Item #2
+                            Est-ce que je peux modifier mes recettes publiées?
                         </button>
-                    </h2>
+                    </p>
                     <div id="flush-collapseTwo" className="accordion-collapse collapse"
                          data-bs-parent="#accordionFlushExample">
-                        <div className="accordion-body">Placeholder content for this accordion, which is intended to
-                            demonstrate the <code>.accordion-flush</code> class. This is the second item’s accordion
-                            body. Let’s imagine this being filled with some actual content.
+                        <div className="accordion-body">
+                            Oui! En cliquant sur l'onglet "Mes recettes".
                         </div>
                     </div>
                 </div>
                 <div className="accordion-item">
-                    <h2 className="accordion-header">
+                    <p>
                         <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapseThree" aria-expanded="false"
                                 aria-controls="flush-collapseThree">
-                            Accordion Item #3
+                            Est-ce que je peux télécharger des recettes en format PDF?
                         </button>
-                    </h2>
+                    </p>
                     <div id="flush-collapseThree" className="accordion-collapse collapse"
                          data-bs-parent="#accordionFlushExample">
-                        <div className="accordion-body">Placeholder content for this accordion, which is intended to
-                            demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion
-                            body. Nothing more exciting happening here in terms of content, but just filling up the
-                            space to make it look, at least at first glance, a bit more representative of how this would
-                            look in a real-world application.
+                        <div className="accordion-body">Cette fonctionnalité n'est pas complète. Merci pour votre patience!
                         </div>
                     </div>
                 </div>

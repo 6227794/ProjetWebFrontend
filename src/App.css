@@ -98,7 +98,6 @@ nav {
 }
 
 .mainlinknav:hover {
-  /* text-decoration: underline; */
   position: relative;
   top: -0.2rem;
   cursor: pointer;
@@ -140,8 +139,6 @@ nav {
   display: block;
   cursor: pointer;
 }
-
-/* .dropdown:hover {background-color: #3e8e41;} */
 
 /* - - - - - - M A I N  F O R  A L L - - - - - - */
 
@@ -533,41 +530,7 @@ input[type="checkbox"] {
 label{
   padding-left: 3px;
 }
-/* - - - - - - F O O T E R - - - - - - */
 
-footer {
-  background-color: var(--forest_green);
-  color: var(--beige);
-  display: grid;
-  grid-template-columns: auto auto auto auto auto;
-  padding: 3rem 20% 3rem;
-}
-
-.appnameft {
-  color: var(--greige);
-  font-family: "Bebas Neue", serif;
-  font-size: 2.8rem;
-  line-height: 2.4rem;
-}
-
-footer a {
-  text-decoration: none;
-}
-
-.nav-footer {
-  font-family: "Bebas Neue", serif;
-  font-size: 1.2rem;
-  letter-spacing: 0.02rem;
-  list-style: none;
-  margin-bottom: 0;
-  padding-right: 1rem;
-}
-
-.beigeline {
-  background-color: var(--beige);
-  width: 2px;
-  height: 5rem;
-}
 
 /* - - - - - - V I E W  R E C I P E - - - - - - */
 
@@ -646,3 +609,62 @@ footer a {
   background-color: var(--forest_green);
   color: var(--beige);
 }
+
+
+/* - - - - - - C H A N S O N - - - - - - */
+
+
+.chansondiv{
+  margin-top: 1rem;
+  background-color: var(--greige);
+  border-radius: var(--mainborder);
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.toright{
+  justify-content: end;
+  text-align: right;
+}
+
+.chansonimg{
+  width: 20%;
+}
+
+.fancy{
+  font-size: 2rem;
+  font-family: "Lobster", sans-serif;
+}
+
+
+/* - - - - - - F O O T E R - - - - - - */
+
+footer {
+  background-color: var(--forest_green);
+  color: var(--beige);
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  padding: 3rem 20% 3rem;
+}
+
+.appnameft {
+  color: var(--beige);
+  font-family: "Bebas Neue", serif;
+  font-size: 2.8rem;
+  line-height: 2.4rem;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+.nav-footer {
+  font-family: "Bebas Neue", serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.02rem;
+  list-style: none;
+  margin-bottom: 0;
+  padding-right: 1rem;
+}
+

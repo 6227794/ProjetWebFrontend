@@ -1,14 +1,15 @@
 import './App.css';
+import './Media.css';
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import AddRecipePage from './pages/AddRecipePage';
-import ConversionPage from './pages/ConversionPage';
 import ErrorPage from './pages/ErrorPage';
 import FAQPage from './pages/FAQPage';
 import MyRecipesPage from './pages/MyRecipesPage.jsx';
 import ProfilPage from './pages/ProfilPage';
 import RecipeListPage from './pages/RecipeListPage';
+import RecipeListByCategoryPage from "./pages/RecipeListByCategoryPage.jsx";
 import ViewRecipePage from './pages/ViewRecipePage';
 import ConnexionPage from './pages/ConnexionPage';
 import InscriptionPage from './pages/InscriptionPage';
@@ -43,8 +44,8 @@ function App() {
             <Route path="/" element={<HomePage/>}/>
             <Route path="/Connexion" element={isConnected ? <Navigate to="/"/> : <ConnexionPage/>}/>
             <Route path="/Inscription" element={<InscriptionPage/>}/>
-            <Route path="/Conversion" element={<ConversionPage/>}/>
             <Route path="/RecipeList" element={<RecipeListPage/>}/>
+            <Route path="/RecipeCategory/:id" element={<RecipeListByCategoryPage/>}/>
             <Route path="/ViewRecipe/:id" element={<ViewRecipePage/>}/>
             <Route path="/UpdateRecipe/:id" element={<UpdateRecipePage/>}/>
             <Route path="/About" element={<AboutPage/>}/>

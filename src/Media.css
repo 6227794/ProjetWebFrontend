@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --mainborder: 15px;
+  --innerborder: 8px;
+  --dark_green: #121D14;
+  --forest_green: #183B25;
+  --moss_green: #344E41;
+  --green: #3A5B40;
+  --light_green: #588057;
+  --lighter_green: #6F9675;
+  --lime_green: #B6CF62;
+  --greige: #DAD7CD;
+  --beige: #F4F0E5;
+  --warning: #890303;
+  --white: white;
+}
+
+@media (max-width: 1360px) {
+  .homepagerecipes,
+  .recipedisplay {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 1024px) {
+  .maindivcontent,
+  .homepagearticle {
+    padding: 3rem 10%;
+  }
+
+  .homeintro {
+    padding: 6rem 40% 0 4rem;
+  }
+
+  .comicallylargetitle {
+    font-size: 5rem;
+    line-height: 5rem;
+  }
+
+  .homeintro p {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .homepagerecipes,
+  .recipedisplay {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .appname {
+    font-size: 2rem;
+  }
+
+  .mainnav {
+    flex-direction: column;
+    align-items: center;
+    gap: unset;
+    width: 100%;
+  }
+
+  .mainnav a {
+    font-size: 1.1rem;
+  }
+
+  .maindivcontent,
+  .homepagearticle {
+    padding: 2rem 5%;
+  }
+
+  .homepagesection {
+    height: 450px;
+  }
+
+  .homeintro {
+    padding: 4rem 30% 0 3rem;
+  }
+
+  .comicallylargetitle {
+    font-size: 4rem;
+    line-height: 4rem;
+  }
+
+  .homeintro p {
+    font-size: 1.2rem;
+  }
+
+  footer {
+    grid-template-columns: 1fr 1fr;
+    padding: 2rem 10%;
+  }
+}
+
+@media (max-width: 480px) {
+  .appname {
+    font-size: 1.5rem;
+  }
+
+  .mainnav a {
+    font-size: 1rem;
+  }
+
+  .mainnav {
+    gap: 0.5rem;
+  }
+
+  .homepagesection {
+    height: 350px;
+  }
+
+  .homeintro {
+    padding: 3rem 20% 0 2rem;
+  }
+
+  .comicallylargetitle {
+    font-size: 3rem;
+    line-height: 3rem;
+  }
+
+  .homeintro p {
+    font-size: 1rem;
+  }
+
+  .homepagerecipes,
+  .recipedisplay,
+  .myrecipedisplay {
+    grid-template-columns: 1fr;
+  }
+
+  footer {
+    grid-template-columns: 1fr;
+    padding: 2rem 5%;
+  }
+}
