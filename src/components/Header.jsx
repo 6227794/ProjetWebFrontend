@@ -18,7 +18,8 @@ function Header() {
     }
 
     useEffect(() => {
-        if(isConnected === true){
+        const id = localStorage.getItem('userId');
+        if(isConnected === true && id){
             setProfilSousMenu("Mon profil");
             const id = localStorage.getItem('userId');
             setProfilMenuLien(`Profil/${id}`);
