@@ -30,8 +30,8 @@ function Footer() {
 
             <div>
                 <ul className="nav-footer">
-                    {/*<li><Link className="nav-link" to={`/${profilMenuLien}`}> Mon profil </Link></li>*/}
-                    {/*<li><Link className="nav-link" to={`/${profilRecetteLien}`}> Mes recettes </Link></li>*/}
+                    <li><Link className="nav-link" to={`/${profilMenuLien}`}> Mon profil </Link></li>
+                    <li><Link className="nav-link" to={`/${profilRecetteLien}`}> Mes recettes </Link></li>
                     <li><Link className="nav-link" to={`/AddRecipe`}> Ajouter une recette </Link></li>
                 </ul>
             </div>
