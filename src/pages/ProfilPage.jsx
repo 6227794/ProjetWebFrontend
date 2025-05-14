@@ -27,7 +27,8 @@ function ProfilePage({setTrigger}) {
 
     const loadUser = async () => {
         const result = await axios.get(`${apiUrl}/utilisateur/getUser/${id}`);
-        setUserData(result.data)
+
+        setUserData(result.data);
     }
 
     const userValues = (e) => {
@@ -42,7 +43,6 @@ function ProfilePage({setTrigger}) {
             const result = await axios.put(`${apiUrl}/utilisateur/updateProfil`, userData);
             console.log("Utilisateur mis à jour :", result.data);
             alert("Modification réussi")
-
         } catch (error) {
             console.log("Erreur lors de la mise à jour :", error);
         }
