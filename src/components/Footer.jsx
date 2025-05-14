@@ -8,8 +8,8 @@ function Footer() {
     const [pilotageVisibility, setPilotageVisibility] = useState("hidden")
 
     useEffect(() => {
-        if(isConnected === true){
-            const id = localStorage.getItem('userId');
+        const id = localStorage.getItem('userId');
+        if(isConnected === true && id){
             setProfilMenuLien(`Profil/${id}`);
             setProfilRecetteLien(`MyRecipes/${id}`);
             if (id.toString() === "1"){
