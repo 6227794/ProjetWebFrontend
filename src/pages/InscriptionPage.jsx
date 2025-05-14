@@ -86,7 +86,7 @@ function InscriptionPage() {
                     <label htmlFor="motDePasse">Mot de passe</label>
                     <input type="password" id="pass" name="motDePasse" minLength="8" required value={userData.motDePasse} onChange={handleChange}/>
                 </div>
-                <button type="submit" className="mainbutton" >Sinscrire</button>
+                <button type="submit" className="mainbutton" id="inscription" >Sinscrire</button>
             </form>
         </div>
     );
