@@ -1,15 +1,28 @@
 import {useEffect, useState} from 'react';
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {apiUrl} from "../../config.js";
 import errorbg from "../assets/empty-plate.jpg";
 
 function MyRecipesPage() {
+    const idLocal = localStorage.getItem('userId');
     const [tabRecipes, setRecipes] = useState([]);
+    const {id} = useParams();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (id ===  idLocal){
+            loadRecettes();
+        }else {
+            alert("Accès refusé");
+            navigate('/');
+        }
+
+    }, []);
 
     const loadRecettes = async () => {
         try {
-            const response = await axios.get(`${apiUrl}/recette/getAllRecipes`);
+            const response = await axios.get(`${apiUrl}/recette/getRecipesByUserId/${id}`);
             const recipes = response.data;
 
             const updatedRecipes = await Promise.all(
@@ -27,10 +40,6 @@ function MyRecipesPage() {
             console.error("Erreur fetch recettes :", error);
         }
     };
-
-    useEffect(() => {
-        loadRecettes();
-    }, []);
 
     const deleteRecipe = async (id) => {
         await axios.delete(`${apiUrl}/recette/deleteRecipe/${id}`);

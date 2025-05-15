@@ -128,8 +128,6 @@ function AddRecipePage() {
     const submitNewRecipe = async (e) => {
         e.preventDefault();
 
-        console.log(recette)
-
         try {
             const result = await axios.post(`${apiUrl}/recette/newRecipe`, recette);
 

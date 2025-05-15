@@ -165,7 +165,6 @@ function UpdateRecipePage() {
             <h1>Modifier la recette</h1>
             <form onSubmit={(e) => updateRecipe(e)} method="post">
                 <div>
-                    {/*<input type="file" onChange={handleFileChange}/>*/}
                     <label htmlFor="nomRecette">Nom de la recette*</label>
                     <input type="text" id="nomRecette" name="nomRecette"
                            placeholder="Nom de la recette"

@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import axios from 'axios';
-
-
+import {apiUrl} from "../../config.js";
 
 
 function InscriptionPage() {
@@ -39,7 +38,7 @@ function InscriptionPage() {
             }
 
             const response = await axios.post(
-                'http://localhost:7246/api/authentification/inscription',
+                `${apiUrl}/authentification/inscription`,
                 info,
                 {
                     headers : {
@@ -50,7 +49,6 @@ function InscriptionPage() {
 
             if (response.data.succes){
                 navigate('/Connexion')
-                console.log('Inscription réussi yippi');
             }else {
                 setError(response.data.message || "Erreur")
             }
